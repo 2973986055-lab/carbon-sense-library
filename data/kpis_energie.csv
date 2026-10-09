@@ -1,0 +1,10 @@
+metric,value,unit,data_status
+seats,314,座,预约界面与团队记录
+led_tubes,42,根,团队清点
+watts_per_tube,18,W,灯管标识与团队确认
+lighting_rated_power,0.756,kW,铭牌计算
+ac_units,2,台,团队清点
+ac_input_per_unit,9.18,kW,照片铭牌与两台同型号假设
+ac_total_rated_input,18.36,kW,铭牌计算非运行实测
+baseline_5day_energy,1199.76,kWh,工程情景估算
+predictive_scenario_saving,9.34,百分比,预设节电比例非模型验证
