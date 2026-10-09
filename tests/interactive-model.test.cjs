@@ -18,7 +18,11 @@ const check = scenario => {
     assert.ok(mode.leftTubes <= 21 && mode.rightTubes <= 21);
     assert.ok(mode.hvacLoad >= 0 && mode.hvacLoad <= 1);
     near(mode.energy + mode.saved, scenario.baselineEnergy);
-    near(mode.energy, (mode.lightingKw + mode.hvacKw) * 2);
+    near(mode.energy, (mode.lightingKw + mode.hvacKw) * scenario.hours);
+    near(mode.energy, mode.lightingEnergy + mode.hvacEnergy);
+    near(mode.saved, mode.lightingSaved + mode.hvacSaved);
+    near(mode.lightingSaved, scenario.baselineLighting - mode.lightingEnergy);
+    near(mode.hvacSaved, scenario.baselineHvac - mode.hvacEnergy);
     near(mode.carbonSaved, mode.saved * .6516);
     near(mode.savingPct, mode.saved / scenario.baselineEnergy * 100);
   }
@@ -62,6 +66,46 @@ const low = model.calculate({ people: 100, temperature: 27 });
 assert.equal(low.modes[1].tubes, 17); assert.equal(low.modes[2].tubes, 16);
 const fullHot = model.calculate({ people: 314, temperature: 34 });
 fullHot.modes.forEach(mode => near(mode.energy, fullHot.baselineEnergy));
+let durationCases = 0;
+for (const people of [0, 1, 100, 157, 294, 314]) for (let temperature = 22; temperature <= 34; temperature += .5)
+  for (let hours = .5; hours <= 8; hours += .5) {
+    const scenario = model.calculate({ people, temperature, hours });
+    check(scenario);
+    const twoHours = model.calculate({ people, temperature });
+    near(scenario.baselineEnergy, twoHours.baselineEnergy * hours / 2);
+    scenario.modes.forEach((mode, i) => {
+      near(mode.energy, twoHours.modes[i].energy * hours / 2);
+      near(mode.saved, twoHours.modes[i].saved * hours / 2);
+      near(mode.savingPct, twoHours.modes[i].savingPct);
+      assert.equal(mode.tubes, twoHours.modes[i].tubes);
+    });
+    durationCases++;
+  }
+for (const hours of [-100, 0, 100, NaN, null, '', Infinity]) {
+  const scenario = model.calculate({ people: 100, temperature: 27, hours });
+  assert.ok(scenario.hours >= .5 && scenario.hours <= 8); check(scenario);
+}
+check(model.calculate(null));
+const normalizeCases = [
+  ['10000', 314, false, true, {min:0,max:314,step:1,fallback:100}],
+  ['-1', 0, false, true, {min:0,max:314,step:1,fallback:100}],
+  ['150.6', 151, false, true, {min:0,max:314,step:1,fallback:100}],
+  ['', 100, true, true, {min:0,max:314,step:1,fallback:100}],
+  ['abc', 100, true, true, {min:0,max:314,step:1,fallback:100}],
+  ['100', 100, false, false, {min:0,max:314,step:1,fallback:100}],
+  ['27.3', 27.5, false, true, {min:22,max:34,step:.5,fallback:27}],
+  ['100', 34, false, true, {min:22,max:34,step:.5,fallback:27}],
+  ['1.2', 1, false, true, {min:.5,max:8,step:.5,fallback:2}],
+  ['0', .5, false, true, {min:.5,max:8,step:.5,fallback:2}]
+];
+for (const [raw, value, invalid, adjusted, bounds] of normalizeCases) {
+  const normalized=model.normalizeNumeric(raw,bounds);
+  assert.equal(normalized.value,value); assert.equal(normalized.invalid,invalid); assert.equal(normalized.adjusted,adjusted);
+}
+for (const preset of Object.values(model.presets)) {
+  const scenario=model.calculate(preset); check(scenario);
+  assert.ok(scenario.modes.some(mode=>mode.id===preset.mode));
+}
 // Reference report is not mutated by the live calculator.
 near(reference.modes[0].energy, 1199.7558); near(reference.modes[2].energy, 1087.676478);
 const html = fs.readFileSync(path.join(root, 'index.html'), 'utf8');
@@ -70,7 +114,7 @@ const ids = [...html.matchAll(/\bid="([^"]+)"/g)].map(match => match[1]);
 assert.equal(new Set(ids).size, ids.length);
 for (const match of html.matchAll(/getElementById\('([^']+)'\)/g)) assert.ok(ids.includes(match[1]), 'missing ID: ' + match[1]);
 assert.ok(!html.includes('study.modes.map((mode,i)=>`<div class="mode'));
-console.log(JSON.stringify({ passed: true, ruleCases: cases, defaultBaseline: defaultScenario.baselineEnergy,
+console.log(JSON.stringify({ passed: true, ruleCases: cases, durationCases, numericInputCases:normalizeCases.length, defaultBaseline: defaultScenario.baselineEnergy,
   lowOccupancyModes: low.modes.map(({ name, energy, tubes }) => ({ name, energy, tubes })),
   fullHotModesEqual: true, reportReferenceUnchanged: true }, null, 2));
 
