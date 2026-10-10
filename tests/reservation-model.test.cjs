@@ -1,0 +1,46 @@
+const fs=require('node:fs');
+const path=require('node:path');
+const vm=require('node:vm');
+const assert=require('node:assert/strict');
+const root=path.join(__dirname,'..'),context=vm.createContext({});
+for(const file of ['reservation-model.js','reservation-profile.js'])vm.runInContext(fs.readFileSync(path.join(root,'data',file),'utf8'),context);
+const model=vm.runInContext('reservationModel',context),artifact=vm.runInContext('reservationArtifact',context);
+const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
+assert.equal(artifact.trainingLabels.join(','),'6/24,6/25,6/26,6/27');
+assert.equal(artifact.testLabel,'6/28');assert.equal(artifact.sourceYear,null);
+assert.equal(artifact.trainingCount,192);assert.equal(artifact.testCount,48);
+assert.equal(artifact.horizonMinutes,30);assert.equal(artifact.intervalMinutes,30);
+assert.equal(artifact.weight,1);assert.equal(artifact.referencePeak,1388);
+near(artifact.validation[2].active.mae,12.65625);
+assert.equal(artifact.validation[2].active.count,32);
+assert.equal(artifact.validation[2].all.count,47);
+const toyDays=[Array.from({length:48},(_,i)=>i),Array.from({length:48},(_,i)=>i*2)];
+const fitted=model.fit(toyDays);near(fitted.profile[20],30);assert.equal(fitted.referencePeak,94);
+near(model.rawForecast(fitted.profile,20,50,1),51.5);
+near(model.rawForecast(fitted.profile,20,50,0),31.5);
+assert.equal(model.rawForecast(fitted.profile,20,0,1),1.5);
+let cases=0,clipped=0;
+for(let slot=0;slot<=46;slot++)for(let current=0;current<=314;current++){
+  const result=model.transfer(artifact,slot,current);
+  assert.ok(Number.isInteger(result.people)&&result.people>=0&&result.people<=314);
+  const predicted=Math.max(0,current+(artifact.profile[slot+1]-artifact.profile[slot])*314/1388);
+  near(result.raw,predicted);assert.equal(result.people,Math.round(Math.min(314,predicted)));
+  assert.equal(result.clipped,predicted>314);if(result.clipped)clipped++;
+  assert.equal(result.targetSlot,slot+1);cases++;
+}
+for(const bad of [-1,47,48,NaN,1.5])assert.throws(()=>model.transfer(artifact,bad,100));
+for(const bad of [-1,315,NaN,Infinity,null,'100'])assert.throws(()=>model.transfer(artifact,32,bad));
+assert.throws(()=>model.fit([]));assert.throws(()=>model.fit([[0]]));
+assert.throws(()=>model.rawForecast([],1,100,1));
+const zeros=Array(48).fill(0);assert.equal(model.score(model.fit([zeros]),zeros,'profile').active.mae,null);
+assert.throws(()=>model.selectWeight([zeros,zeros]));
+// Future targets never enter the prediction function. Changing future truth only changes its error.
+const first=Array.from({length:48},(_,i)=>i+10),second=Array.from({length:48},(_,i)=>i+12);
+const original=model.rawForecast(model.fit([first]).profile,20,second[20],1);
+second[21]=9999;near(model.rawForecast(model.fit([first]).profile,20,second[20],1),original);
+const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
+for(const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(script[1]);
+const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(match=>match[1]);assert.equal(new Set(ids).size,ids.length);
+for(const match of html.matchAll(/getElementById\('([^']+)'\)/g))assert.ok(ids.includes(match[1]),'Missing ID '+match[1]);
+assert.ok(!fs.readFileSync(path.join(root,'data/reservation-profile.js'),'utf8').includes('C:/Users/'));
+console.log(JSON.stringify({passed:true,cases,clippedCases:clipped,example:model.transfer(artifact,32,298),holdout:'6/28',primaryMaeFullLibrary:artifact.validation[2].active.mae},null,2));
