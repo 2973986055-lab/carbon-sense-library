@@ -1,9 +1,9 @@
 'use strict';
-// Derived from team-provided 6/24—28 library reservation exports. Year unconfirmed.
+// Derived from team-provided 6/24—28 library reservation exports. User confirmed 2026.
 const reservationArtifact = {
   "version": 1,
   "scope": "全馆预约人数趋势迁移至一楼的人数情景",
-  "sourceYear": null,
+  "sourceYear": 2026,
   "intervalMinutes": 30,
   "horizonMinutes": 30,
   "trainingLabels": [
@@ -191,7 +191,7 @@ const reservationArtifact = {
     ]
   },
   "limitations": [
-    "年份待确认，不使用星期特征",
+    "用户确认年份为2026年；现有短样本基线不拟合星期效应",
     "全馆预约人数不等于实际在座人数",
     "峰值归一化仅用于曲线形状迁移，不是分区实测",
     "6/28仅用于最终测试，没有参与均值、峰值或权重拟合",
