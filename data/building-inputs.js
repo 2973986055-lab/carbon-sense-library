@@ -3,6 +3,19 @@
 // User-reported approximate dimensions are distinct from modelling assumptions.
 const buildingInputs = {
   revision: '2026-10-11',
+  equipment: {
+    hvac: {
+      count: 2, inputKwPerUnit: 9.18, coolingKwPerUnit: 28,
+      model: 'KFRd-280LW/730A', sameSpecificationConfirmed: true,
+      photographedLabels: 1, simultaneousOperation: true,
+      source: '第一台铭牌照片；2026-10-11用户确认第二台与第一台相同，两台同时启停；非运行功率实测'
+    },
+    lighting: {
+      count: 42, wattPerTube: 18, groups: 14, tubesPerGroup: 3, tubesPerSide: 21,
+      individuallySwitchable: true,
+      source: '用户确认42根18W LED，左右各21根，每组3根可分别开关；未接入联网控制'
+    }
+  },
   geometry: {
     lengthM: 27, widthM: 14, floorAreaM2: 378,
     ceilingHeightM: null,
@@ -18,9 +31,12 @@ const buildingInputs = {
   },
   operation: {
     enabledAcUnits: 2, baselineSetpointC: 24, baselineLightsOn: 42,
-    acStartRule: '早上有人到场后开启', acStopRule: '晚上无人后关闭',
+    reportedSetpointRangeC: [23, 24],
+    acStartRule: '有人到场后两台同时开启', acStopRule: '晚上无人后两台同时关闭',
+    temporaryVacancyStopRule: null,
     exactStartTime: null, exactStopTime: null,
-    actualAcRuntimeHours: null, source: '用户描述通常运行方式，非历史运行日志'
+    actualAcRuntimeHours: null,
+    source: '2026-10-11用户确认：两台同时开，有人就开、晚上无人关，常用23—24℃，灯一般全开；非历史运行日志'
   },
   availableData: {
     floorAttendanceMeasured: false, indoorTemperatureHumidityMeasured: false,

@@ -10,7 +10,7 @@ for(const file of ['building-inputs.js','thermal-model.js','environment-dataset.
 const get=name=>vm.runInContext(name,context);
 const model=get('thermalModel'),inputs=get('buildingInputs'),data=get('environmentDataset');
 const near=(a,b)=>assert.ok(Math.abs(a-b)<1e-8,`${a} != ${b}`);
-assert.equal(data.sourceYear,2026);assert.equal(data.version,2);
+assert.equal(data.sourceYear,2026);assert.equal(data.version,3);
 assert.equal(data.records.length,336);assert.equal(data.daily.length,7);
 assert.equal(new Set(data.records.map(r=>r.timestamp)).size,336);
 assert.equal(inputs.geometry.windowTotalWidthM,14.4);
@@ -65,7 +65,7 @@ const extreme=model.calculate({...selected,outdoorTemperatureC:45,southVerticalI
 assert.equal(extreme.humidityEstimatePct,null);
 assert.ok(extreme.sensibleUnmetKw>0);
 assert.ok(extreme.flags.some(flag=>flag.includes('制冷能力不足')));
-const zero=model.compare(selected,{people:0});
+const zero=model.compare(selected,{people:0,acRunning:false,baselineTubes:0,optimizedTubes:0});
 assert.ok(zero.modes.every(m=>m.energyKwh===0&&m.savingPct===null));
 const noCooling=model.calculate({...selected,outdoorTemperatureC:12,southVerticalIrradianceWm2:0},{people:1,ach:3});
 near(noCooling.hvacKwh,0);assert.ok(noCooling.lightingKwh>0);
@@ -73,14 +73,14 @@ const sensitivity=model.sensitivity(selected);
 assert.equal(sensitivity.scenarios,16);
 assert.ok(sensitivity.note.includes('不是统计置信区间'));
 assert.ok(sensitivity.energyKwhRange[0]<=sensitivity.energyKwhRange[1]);
-near(data.peopleValidationSummary.mae,15.0078125);
+near(data.peopleValidationSummary.mae,14.95);
 assert.equal(data.peopleValidationSummary.activeTargets,64);
 const peopleModel=get('reservationModel'),artifact=get('reservationArtifact');
 const daily=data.daily.map(day=>data.records.filter(r=>r.date===day.date).map(r=>r.libraryReservations));
-const fit=peopleModel.fit(daily.slice(0,4));
+const fit=peopleModel.fit(daily.slice(0,5));
 assert.equal(Array.from(fit.profile).join(','),Array.from(artifact.profile).join(','));
-near(peopleModel.score(fit,daily[5],'adjusted',artifact.weight).active.mae,14.34375);
-near(peopleModel.score(fit,daily[6],'adjusted',artifact.weight).active.mae,15.671875);
+near(peopleModel.score(fit,daily[5],'adjusted',artifact.weight).active.mae,14.90625);
+near(peopleModel.score(fit,daily[6],'adjusted',artifact.weight).active.mae,14.99375);
 const html=fs.readFileSync(path.join(root,'index.html'),'utf8');
 const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(new Set(ids).size,ids.length);
@@ -88,8 +88,9 @@ for(const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script
 const panel=fs.readFileSync(path.join(root,'data/climate-panel.js'),'utf8');new vm.Script(panel);
 for(const match of panel.matchAll(/(?:get|text)\('([^']+)'/g)) assert.ok(ids.includes(match[1]),`Missing ID ${match[1]}`);
 for(const id of ['climateDate','climateTime','climatePeople','climateHeight','climateAch','climateCurtain',
-  'climateOptimizedTemp','climateOptimizedTubes','climateInitialRh','climateShr'])assert.ok(ids.includes(id));
-for(const script of ['building-inputs','thermal-model','environment-dataset','climate-panel'])assert.ok(html.includes(`src="data/${script}.js"`));
+  'climateBaselineTemp','climateOperation','climateOptimizedTemp','climateOptimizedTubes','climateInitialRh','climateShr'])assert.ok(ids.includes(id));
+const linkedScripts=[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>new URL(m[1],'https://example.test/').pathname);
+for(const script of ['building-inputs','thermal-model','environment-dataset','climate-panel'])assert.ok(linkedScripts.includes(`/data/${script}.js`));
 assert.ok(html.indexOf('data/environment-dataset.js')<html.indexOf('data/climate-panel.js'));
 const publicData=fs.readFileSync(path.join(root,'data/environment-dataset.js'),'utf8');
 assert.ok(!publicData.includes('C:/Users/')&&!publicData.includes('C:\\\\Users\\\\'));

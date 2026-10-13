@@ -1,0 +1,20 @@
+.control-inputs select{min-width:0;max-width:100%;width:100%}
+.control-energy-parts{display:flex;flex-wrap:wrap;gap:5px 12px;font-size:.66rem;color:#55734a;line-height:1.8;margin-top:12px}
+.control-zone-preview{margin:0 0 24px;border:1px solid #e1e8da;border-radius:10px;padding:16px;color:#48613d}
+.control-zone-preview summary{cursor:pointer;font-size:.76rem}
+.zone-preview-heading{display:flex;flex-wrap:wrap;align-items:center;gap:14px;margin:14px 0}
+.zone-preview-heading p{flex:1;font-size:.7rem;line-height:1.9;color:#5f7354;margin:0}
+.zone-preview-heading label{display:grid;gap:5px;min-width:110px;font-size:.66rem}
+.zone-preview-heading select,.zone-preview-heading input{min-height:40px;padding:9px 10px;border:1px solid #dce6d1;border-radius:7px;background:#f7faf3;color:#37582a;font:inherit;min-width:0;max-width:100%}
+.zone-map-heading{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:0 0 10px;font-size:.7rem;color:#547047}
+.zone-map{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+.zone-light-card{border:1px solid #e1e8da;border-radius:8px;padding:12px;background:#f7faf3;min-width:0}
+.zone-light-card>div:first-child{display:flex;align-items:center;justify-content:space-between;gap:8px}
+.zone-light-card h4{margin:0;font-size:.74rem;color:#4e6b3d}
+.zone-light-card span,.zone-light-card p,.zone-light-card>small{font-size:.64rem;color:#5f7354}
+.zone-light-card p{margin:7px 0}.zone-light-card p small{display:block;font-size:.6rem;margin-top:4px}
+.zone-light-status{display:flex;align-items:center;gap:5px;margin-top:9px}
+.zone-light-status i{display:block;width:19px;height:6px;border-radius:3px;background:#d3dbce}
+.zone-light-status i.on{background:#6d9d67}.zone-light-status b{font-weight:400;font-size:.62rem;margin-left:4px}
+.zone-light-card.insufficient{background:#fff8ea;border-color:#e4d2ad}.zone-light-card.insufficient>small{color:#885f25}
+@media(max-width:760px){.zone-preview-heading{display:block}.zone-preview-heading label{margin-top:10px;max-width:140px}.zone-light-card>div:first-child{display:block}.zone-light-card span{display:block;margin-top:5px}.control-mode-card dl{grid-template-columns:1fr 1fr}.control-energy-parts{font-size:.64rem}.zone-light-card{padding:10px}}
