@@ -72,6 +72,11 @@ assert.match(html,/id="jointHvacBars"/);
 assert.match(html,/id="jointLightingChart"/);
 assert.match(html,/id="jointHvacChart"/);
 assert.match(html,/id="jointForecastAuditBody"/);
+assert.doesNotMatch(html,/6月29—30日已反复用于开发检查，不是现场实测或未触碰的新验证。/);
+assert.equal((html.match(/模型情景节电率 · 相对日常基准/g)||[]).length,2);
+assert.match(html,/模型情景节电率＝（同组日常基准名义电量－当前策略名义电量）/);
+assert.doesNotMatch(html,/温度可比门槛|不可比|日末最大温差不超过0\.05℃/);
+assert.match(html,/不要求日末温度相同/);
 for(const file of ['evidence/README.md','evidence/forecast-fixed-light-ablation.json','evidence/forecast-terminal-guard-step-sensitivity.json']){
   assert.ok(fs.existsSync(path.join(root,file)),`missing linked evidence: ${file}`);
   assert.ok(html.includes(`href="${file}"`),`missing evidence link: ${file}`);
@@ -120,8 +125,46 @@ for(const fixed of contribution.cases){
   const action=actions.cases.find(item=>item.date===fixed.date&&item.mixingWPerK===fixed.mixingWPerK);
   assert.match(displayed,new RegExp(`当前联算${action.sameStateCommandChanges}/192次，固定灯对照${fixed.sameStateCommandChanges}/192次`));
   assert.match(displayed,fixed.predictiveMinusRealtimeKwh>1e-8?/比实时多用/:fixed.predictiveMinusRealtimeKwh<-1e-8?/比实时少用/:/与实时相同/);
-  assert.match(displayed,fixed.temperatureComparable?/日终温差不超过0\.05℃/:fixed.bothTemperaturePass?/超过0\.05℃可比门槛/:/未通过模型温度边界/);
-  assert.match(element('jointForecastAuditHeading').textContent,/无可报告的预测独立节电/);
+  assert.match(displayed,fixed.bothTemperaturePass?/均通过模型温度边界/:/至少一种未通过模型温度边界/);
+  assert.ok(displayed.includes(`两者四区日末最大温差${fixed.terminalDifferenceC.toFixed(3)}℃（辅助信息）`));
+  assert.doesNotMatch(displayed,/可比|0\.05℃|门槛/);
+  assert.match(element('jointForecastAuditHeading').textContent,/节电率比较整套策略/);
+  assert.match(displayed,/各策略与日常基准的分项名义电量/);
+  assert.match(displayed,/预测独立节电的稳健性与跨日影响仍待验证/);
+  const selectedCase=payload.cases.find(item=>item.date===fixed.date&&item.mixingWPerK===fixed.mixingWPerK);
+  const temperatureFoot=element('jointHvacFoot').textContent;
+  assert.match(temperatureFoot,/四区日末最大温差（相对基准，辅助信息）/);
+  assert.doesNotMatch(temperatureFoot,/可比|门槛/);
+  for(const [label,key] of [['实时','baselineToRealtime'],['预测','baselineToPredictive']]){
+    assert.ok(temperatureFoot.includes(`${label}${selectedCase.comparisons[key].hvac.terminalDifferenceC.toFixed(3)}℃`));
+  }
+  assert.match(element('jointVerdict').textContent,/不要求日末温度相同/);
+  for(const [metric,id] of [['lighting','jointLightingBars'],['hvac','jointHvacBars']]){
+    const rows=element(id).innerHTML;
+    assert.match(rows,/基准参照/);
+    for(const mode of ['realtime','predictive']){
+      const expected=(100*(selectedCase.modes.baseline[metric].kwh-selectedCase.modes[mode][metric].kwh)/selectedCase.modes.baseline[metric].kwh).toFixed(2);
+      assert.ok(rows.includes(`节电率 ${expected}%`),`${fixed.date}/${fixed.mixingWPerK}/${metric}/${mode}: missing baseline-relative rate`);
+    }
+  }
+}
+for(const [baselineKwh,predictiveKwh,expected] of [[100,110,'节电率 -10.00%'],[0,1,'基准为0，未计算']]){
+  const synthetic={...keyCase,modes:{...keyCase.modes,
+    baseline:{...keyCase.modes.baseline,hvac:{...keyCase.modes.baseline.hvac,kwh:baselineKwh}},
+    predictive:{...keyCase.modes.predictive,hvac:{...keyCase.modes.predictive.hvac,kwh:predictiveKwh}}}};
+  const isolated=new Map(),get=id=>{
+    if(!isolated.has(id))isolated.set(id,{value:'',textContent:'',innerHTML:'',
+      addEventListener(){},querySelector(){return {setAttribute(){}};}});
+    return isolated.get(id);
+  };
+  get('jointDate').value=synthetic.date;get('jointMix').value=String(synthetic.mixingWPerK);
+  vm.runInNewContext(fs.readFileSync(path.join(root,'data/joint-evidence-panel.js'),'utf8'),{
+    window:{CarbonJointEvidence:{...payload,cases:[synthetic]},CarbonJointForecastActionEvidence:actions,CarbonForecastContributionEvidence:contribution},
+    document:{getElementById:get,dispatchEvent(){}},CustomEvent:class{}
+  });
+  assert.ok(get('jointHvacBars').innerHTML.includes(expected));
+  assert.doesNotMatch(get('jointHvacBars').innerHTML,/NaN|Infinity/);
+  if(baselineKwh>0)assert.match(get('jointHvacBars').innerHTML,/joint-saving-rate is-negative/);
 }
 for(const auditSources of [
   {CarbonJointForecastActionEvidence:{},CarbonForecastContributionEvidence:contribution},

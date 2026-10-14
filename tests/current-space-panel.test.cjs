@@ -39,7 +39,7 @@ assert.match(html,/data\/current-space-panel\.js/);
 assert.match(html,/data\/current-space-panel\.css/);
 assert.match(html,/id="spaceMode"/);
 assert.match(html,/id="spaceTimeRange"/);
-assert.match(html,/content="20261014-seat-example-v1"/);
+assert.match(html,/<meta name="carbon-release" content="20261014-[a-z0-9-]+">/);
 assert.match(html,/layerScales=\{occupancy:90,lighting:216,hvac:1\}/);
 assert.match(html,/色块深浅采用固定标尺/);
 assert.match(html,/回放时段 <strong id="spaceTimeLabel">09:05—09:10/);
