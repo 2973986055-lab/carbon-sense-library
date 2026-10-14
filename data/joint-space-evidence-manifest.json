@@ -1,6 +1,6 @@
 {
-  "version": "20261014-space-sync-local",
-  "status": "local_unpublished",
+  "version": "20261014-space-sync-v1",
+  "status": "published",
   "dataSha256": "d4dcfd287c672f4e6da335d33ea404d7f7caca4748a298a71a538645b4ef2b3e",
   "sources": [
     {

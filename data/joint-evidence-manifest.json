@@ -1,7 +1,7 @@
 {
   "id": "CARBON-JOINT-SPLIT-WEBSITE-01",
-  "version": "20261014-joint-split-local",
-  "status": "local_unpublished",
+  "version": "20261014-joint-split-v1",
+  "status": "published",
   "sourceCases": [
     {
       "date": "2026-06-29",
