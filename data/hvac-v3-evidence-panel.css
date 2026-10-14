@@ -1,0 +1,44 @@
+.hvac-evidence{padding:28px;margin:0 0 16px;scroll-margin-top:24px}
+.hvac-evidence-head{display:flex;align-items:start;justify-content:space-between;gap:20px}
+.hvac-evidence-kicker{display:block;color:#67886c;font-size:.69rem;letter-spacing:.12em;margin-bottom:8px}
+.hvac-evidence h2{font-size:1.28rem;line-height:1.35;margin:0 0 9px;color:#254638}
+.hvac-evidence-head p{max-width:720px;color:#5f7566;font-size:.76rem;line-height:1.8;margin:0}
+.hvac-evidence-status{background:#f8f2e4;border:1px solid #eadcbb;color:#805f23;border-radius:100px;padding:8px 12px;font-size:.68rem;white-space:nowrap}
+.hvac-evidence-controls{display:flex;gap:12px;flex-wrap:wrap;margin:23px 0 17px;padding:15px;border-radius:12px;background:#f4f8f2}
+.hvac-evidence-controls label{display:grid;gap:6px;color:#607761;font-size:.69rem}
+.hvac-evidence-controls select{min-width:160px;min-height:40px;padding:8px 11px;border-radius:8px;border:1px solid #d7e5d6;background:#fff;color:#254638;font:inherit;font-size:.78rem}
+.hvac-evidence-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px}
+.hvac-evidence-card{padding:18px;border:1px solid #dde9dd;border-radius:12px;background:#fbfdfa;min-width:0}
+.hvac-evidence-card.realtime{background:#f5faf9;border-color:#cfe5dd}
+.hvac-evidence-card.predictive{background:#f4f8ee;border-color:#d9e7cd}
+.hvac-evidence-card h3{margin:0 0 12px;color:#42634a;font-size:.81rem;font-weight:600}
+.hvac-evidence-energy{display:block;font-size:1.75rem;font-weight:600;color:#274d3b;letter-spacing:-.04em;font-variant-numeric:tabular-nums}
+.hvac-evidence-energy small{font-size:.68rem;font-weight:400;letter-spacing:0;color:#678471}
+.hvac-evidence-meter{height:6px;background:#e5eee4;border-radius:8px;margin:13px 0 14px;overflow:hidden}
+.hvac-evidence-meter i{display:block;height:100%;background:#6f9a73;border-radius:8px}
+.hvac-evidence-card dl{display:flex;justify-content:space-between;gap:10px;margin:0;font-size:.69rem}
+.hvac-evidence-card dt{color:#647d67}.hvac-evidence-card dd{margin:0;color:#2f5940;font-weight:600;font-variant-numeric:tabular-nums}
+.hvac-evidence-card dd.fail{color:#a06435}
+.hvac-evidence-verdict{margin:15px 0 0;padding:9px 0;color:#775e2e;font-size:.73rem;line-height:1.7;font-weight:600}
+.hvac-evidence-pairs{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
+.hvac-evidence-pair{padding:15px;border:1px solid #e1e9de;border-radius:10px;background:#fff}
+.hvac-evidence-pair b{font-size:.72rem;color:#42664a}.hvac-evidence-pair p{font-size:.69rem;color:#647766;line-height:1.7;margin:8px 0 0}
+.hvac-evidence-methods{margin-top:18px;border-top:1px solid #e2ebdf;padding-top:15px;font-size:.7rem;color:#617663;line-height:1.85}
+.hvac-evidence-methods summary{cursor:pointer;font-weight:600;color:#456d4b}
+.hvac-evidence-methods p{margin:12px 0}.hvac-evidence-methods a{color:#31745d}
+.hvac-zone-map{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));max-width:400px;border:1px solid #cddfcf;border-radius:10px;overflow:hidden;margin:15px 0}
+.hvac-zone-map span{padding:12px;border:1px solid #e0eae0;background:#f6faf6;font-size:.68rem;color:#41684b}
+.hvac-zone-map small{display:block;color:#79917d;font-size:.61rem}
+.lighting-evidence{margin:0 0 14px;padding:18px 22px;border:1px solid #dfe9dc;border-radius:12px;background:#fff}
+.lighting-evidence h3{font-size:.85rem;margin:0 0 8px;color:#3f6147}
+.lighting-evidence p{font-size:.69rem;line-height:1.8;color:#637966;margin:0}
+.lighting-evidence details{font-size:.7rem;margin-top:10px}.lighting-evidence summary{cursor:pointer;color:#477451}
+.lighting-evidence table{width:100%;border-collapse:collapse;margin-top:10px;font-size:.68rem}
+.lighting-evidence th,.lighting-evidence td{padding:8px 9px;border-bottom:1px solid #e2ebe0;text-align:left;font-variant-numeric:tabular-nums}
+.lighting-evidence th{color:#526d56}.lighting-evidence td{color:#58715d}
+.legacy-control-disclosure{margin:0 0 14px;border:1px solid #dce8db;border-radius:12px;background:#f2f7f0}
+.legacy-control-disclosure>summary{display:flex;justify-content:space-between;gap:12px;padding:17px 21px;cursor:pointer;color:#496d51;font-size:.78rem;font-weight:600}
+.legacy-control-disclosure>summary small{color:#6d846f;font-size:.65rem;font-weight:400}
+.legacy-control-disclosure .control-comparison{margin:0;border:0;border-top:1px solid #dce8db;border-radius:0;box-shadow:none}
+@media(max-width:850px){.hvac-evidence-grid{grid-template-columns:1fr}.hvac-evidence-pairs{grid-template-columns:1fr}}
+@media(max-width:600px){.hvac-evidence{padding:20px 17px}.hvac-evidence-head{display:block}.hvac-evidence-status{display:inline-block;margin-top:12px}.hvac-evidence-controls{display:grid;grid-template-columns:1fr 1fr}.hvac-evidence-controls select{min-width:0;width:100%}.legacy-control-disclosure>summary{display:block}.legacy-control-disclosure>summary small{display:block;margin-top:5px}.lighting-evidence{padding:17px}.lighting-evidence table{font-size:.61rem}}

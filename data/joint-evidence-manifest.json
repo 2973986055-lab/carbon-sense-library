@@ -1,0 +1,64 @@
+{
+  "id": "CARBON-JOINT-SPLIT-WEBSITE-01",
+  "version": "20261014-joint-split-local",
+  "status": "local_unpublished",
+  "sourceCases": [
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 300,
+      "source": "2026-06-29_mix300_separate.json",
+      "sha256": "eeae1a68cd5e4b5b40c0487582b32c41c213af73f4f33887cff24bdbc9318f32",
+      "replaySource": "2026-06-29_mix300_joint.json",
+      "replaySha256": "89a0e7025b00891f3597542a63c2a9de02434a6134faee14b22a6be3fdaf64e7"
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 1000,
+      "source": "2026-06-29_mix1000_separate.json",
+      "sha256": "1644448534b5ff61c5967b09fb3d692480d706498fdafb806f967b55fb30c320",
+      "replaySource": "2026-06-29_mix1000_joint.json",
+      "replaySha256": "9ce6358b8f45be193c807aeb0cdedaa52b8e46c6d0eb68ae83a761c909d6829b"
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 5000,
+      "source": "2026-06-29_mix5000_separate.json",
+      "sha256": "7dcb0cda52d2f16808dc1340ea57bab0aee14e59ebef869feefa7337d835a639",
+      "replaySource": "2026-06-29_mix5000_joint.json",
+      "replaySha256": "1633d35ca0421c92954fda7069d347d137d2049fd9438ed6f5c52199e3a6f0d8"
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 300,
+      "source": "2026-06-30_mix300_separate.json",
+      "sha256": "6cb02414346645f7ebf0ce4ac6b9b824302273184eb01374ae16ab406375eea6",
+      "replaySource": "2026-06-30_mix300_joint.json",
+      "replaySha256": "c48b505ca18694e36100dcd2c6c9328185afa1efa66b91142e1ece4475c29c84"
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 1000,
+      "source": "2026-06-30_mix1000_separate.json",
+      "sha256": "ffc5dfdf89ee74759c01025d81ea8f82ec0ea6b96607b8abe735dff054516134",
+      "replaySource": "2026-06-30_mix1000_joint.json",
+      "replaySha256": "5c125e39080f0c9d4fe3baaf349fbd5e4560d46efa52638ac8656c9b36fdf25d"
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 5000,
+      "source": "2026-06-30_mix5000_separate.json",
+      "sha256": "977a9de55016f525e48a9b1ac034cd606e35597fefc4a57aa1dfb9aae6b94b29",
+      "replaySource": "2026-06-30_mix5000_joint.json",
+      "replaySha256": "8f85ff1ca268c5d8cd320af94fbc00883a2206a2e49a56254a84e7c87debb14f"
+    }
+  ],
+  "websiteDataSha256": "cd14d9b62fb87da6006b41b12168e68537ba74d3f71614eaef7d8016421f2868",
+  "forecastActionDataSha256": "a3e099b95cb68134cfc6046fa4bfaa0247211e3e2c7b74f92f770a13d23519fd",
+  "sourceAdapterSha256": "b228fe16825985824e5b4d64cb7b9529a0c88f3cdf4c463f2b1f92496aea3bb2",
+  "limitations": [
+    "14 lamp groups to four HVAC regions are a declared unverified mapping",
+    "300/1000/5000 W/K are uncalibrated mixing scenarios",
+    "The 300 lx full-on model target is frequently unmet; no site illuminance or power validation",
+    "6/29–30 have been inspected in development; no untouched independent test"
+  ]
+}

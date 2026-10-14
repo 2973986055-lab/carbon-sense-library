@@ -1,0 +1,21 @@
+{
+  "id": "CARBON-HVAC-FORECAST-GUARD-V3-01",
+  "date": "2026-10-13",
+  "status": "candidate_training_only_guard_before_replay",
+  "parentComparisonProtocolId": "CARBON-HVAC-THREE-MODE-V2-01",
+  "comfortCriterionId": "CARBON-HVAC-COMFORT-V2",
+  "calibrationFile": "D:/附件集合/outputs/carbon_hvac_forecast_guard_v3_20261013/训练期门槛.json",
+  "calibrationSha256": "a30e29c031f856957ab060c7b23c5e0fa4e39b9a6b90168ddbe007e31c9ae439",
+  "trainingDates": ["2026-06-24", "2026-06-25", "2026-06-26", "2026-06-27", "2026-06-28"],
+  "replayDates": ["2026-06-29", "2026-06-30"],
+  "thresholdPeople": 11,
+  "materialityRule": "At each five-minute decision, use the frozen next-half-hour forecast only when the future boundary is inside the 30-minute horizon and |predicted-next proxy minus current proxy| > 11. Otherwise use the same-state persistence decision.",
+  "directionalRule": "If material forecast indicates more people, compute both decisions from identical current state and observation memory. Reject the forecast decision when it turns off a unit enabled by persistence or raises either enabled unit's device setpoint. The unchanged persistence action remains available.",
+  "declineRule": "A material predicted decline can select the V2 forecast decision subject to its unchanged sampled-temperature search and device holds. It does not establish an unoccupied zone; all four allocations remain assumptions.",
+  "sharedConditions": "Same two-unit response model, 22.2-26.8 C occupied / 20-28 C empty room-air acceptance, current weather held, five-minute decisions, 30-minute horizon, 20-minute holds, 15-second nominal integration, initial 24 C, 06:30-22:30, baseline23 and baseline24 retained separately.",
+  "sensitivityMixingWPerK": [300, 1000, 5000],
+  "terminalRule": "Use parent protocol: both modes pass every sampled zone temperature constraint and each four-zone final temperature differs <=0.05 C; otherwise no qualified saving percentage. No end restoration is assumed.",
+  "electricity": "Nominal 9.18 kW per simulated compressor ON, not measured power or verified part-load consumption.",
+  "evaluationRole": "Historical replay already inspected in development; no untouched independent control test or field verification. Threshold was not selected using replay savings.",
+  "decisionClaim": "Training-derived materiality is an engineering guard candidate, not a confidence interval or certified safe control. Never describe a small forecast change as verified spatial vacancy."
+}

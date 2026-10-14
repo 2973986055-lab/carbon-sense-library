@@ -117,4 +117,3 @@ assert.ok(!html.includes('study.modes.map((mode,i)=>`<div class="mode'));
 console.log(JSON.stringify({ passed: true, ruleCases: cases, durationCases, numericInputCases:normalizeCases.length, defaultBaseline: defaultScenario.baselineEnergy,
   lowOccupancyModes: low.modes.map(({ name, energy, tubes }) => ({ name, energy, tubes })),
   fullHotModesEqual: true, reportReferenceUnchanged: true }, null, 2));
-

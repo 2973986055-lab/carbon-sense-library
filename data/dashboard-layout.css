@@ -43,4 +43,11 @@ body{background:var(--bg);color:var(--text);font-family:"Microsoft YaHei UI","Pi
 .seat-layout-disclosure>summary small,.data-disclosure>summary small,.legacy-archive>summary small{color:#6c7e62}
 .decision-note.important{color:#806723}.climate-status{color:#627b54}.footer,.footer strong{color:#6b7d60}
 .legacy-content .caption-note{color:#93aebf}
+.forecast-layout{grid-template-columns:minmax(0,1fr);max-width:900px;margin-inline:auto}
+.forecast-block{width:100%}
+.forecast-block .transfer-chart{display:block;width:100%;max-width:560px;margin:15px auto 0}
+.zone-list .zone{grid-template-columns:30px minmax(0,1fr) auto;gap:9px}
+.zone-list .zone b{align-self:center}
+@media(max-width:760px){.zone-list .zone{grid-template-columns:23px minmax(0,1fr) auto}.zone-list .zone-value{grid-column:auto;white-space:nowrap}}
 @media(prefers-reduced-motion:reduce){.energy-track i,.nav a{transition:none}html{scroll-behavior:auto}}
+.climate-room-diagram svg{display:block;width:min(100%,440px);height:auto;margin:14px auto 6px}

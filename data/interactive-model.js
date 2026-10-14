@@ -66,4 +66,3 @@ const interactiveModel = (() => {
   }
   return { rules, presets, normalizeNumeric, calculate };
 })();
-

@@ -1,0 +1,43 @@
+{
+  "id": "CARBON-HVAC-THREE-MODE-V2-01",
+  "date": "2026-10-13",
+  "status": "candidate_comparison_protocol",
+  "parentProtocolId": "CARBON-HVAC-EVAL-V1",
+  "comfortCriterionId": "CARBON-HVAC-COMFORT-V2",
+  "occupiedRoomAirC": [22.2, 26.8],
+  "emptyRoomAirC": [20, 28],
+  "evaluationDates": ["2026-06-29", "2026-06-30"],
+  "evaluationRole": "Historical replay already used during development; not untouched independent test or field verification.",
+  "windowMinutes": [390, 1350],
+  "initialFourZoneTemperatureC": [24, 24, 24, 24],
+  "people": "Current first-floor registry proxy from frozen training mapping; four-zone allocation is an assumed west pattern.",
+  "weather": "At every decision only current-slot weather is available to both adaptive strategies; it is held in each 30-minute projection.",
+  "plant": {
+    "commonModel": "Existing two-cabinet response model, two 28 kW nominal cooling / 9.18 kW label input machines.",
+    "referenceMixingWPerK": 300,
+    "sensitivityMixingWPerK": [1000, 5000],
+    "coverage": "balanced",
+    "ownSegmentShare": 0.7,
+    "sensor": "localSouth",
+    "responseSeconds": 0,
+    "deadbandC": 0.5,
+    "stepSeconds": 15,
+    "initialTemperatureC": 24,
+    "allUncalibrated": true
+  },
+  "baselineVariants": [
+    {"id": "baseline_23", "rule": "When current floor people proxy is positive, permit both machines together at device setpoint 23℃; otherwise request both off. Basic device protection may delay the requested transition."},
+    {"id": "baseline_24", "rule": "Same rule at device setpoint 24℃. Report separately; do not select the larger-energy baseline after seeing results."}
+  ],
+  "adaptiveVariants": [
+    {"id": "realtime", "controller": "V2", "futurePeople": "Persistence of currently known people proxy"},
+    {"id": "predictive", "controller": "V2", "futurePeople": "Previously frozen next-half-hour forecast"}
+  ],
+  "adaptiveSharedRules": {"decisionMinutes": 5, "horizonMinutes": 30, "permissionHoldMinutes": 20, "setpointHoldMinutes": 20, "guardMarginC": 0.1, "guardDurationMinutes": 2, "beamWidth": 8, "allowHoldException": false},
+  "lighting": "All 42 × 18 W ceiling LEDs fixed on in this HVAC comparison; no lighting saving counted.",
+  "electricity": "Only nominal HVAC input 9.18 kW × simulated compressor-ON duration per machine. Actual part-load, fans, standby, startup and measured bills unavailable.",
+  "terminalSettlement": {"resetAtEnd": false, "restoreAtEnd": false, "maxFourZoneDifferenceCForQualifiedComparison": 0.05, "compareStoredThermalChange": true, "compareFinalDeviceState": true},
+  "qualifiedSavingRule": "Both compared modes must pass every sampled occupied and empty temperature check and each of four end temperatures must differ by at most 0.05℃. Otherwise show raw nominal energy and temperature service separately, with qualified saving percentage null.",
+  "forecastIncrementalRule": "Realtime and predictive must use the same V2 controller and plant; only next-half-hour people source differs. Do not ascribe all predictive-vs-baseline difference to forecasting.",
+  "knownLimits": "No actual indoor temperature, first-floor seat occupancy, airflow, operating electricity or calibration. Strong mixing may change feasibility; report default and sensitivities together. No future actual weather or actual next-slot people enters a deployable decision."
+}

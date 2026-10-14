@@ -1,0 +1,252 @@
+{
+  "id": "CARBON-HVAC-EVAL-V1",
+  "date": "2026-10-13",
+  "status": "candidate_protocol_awaiting_user_review",
+  "module": "比较协议与低频控制规则",
+  "researchQuestion": "在同一未校准空间/设备情景与有人区23—24℃目标下，人数预测是否改变可执行的双柜机调控，并改善名义能耗或温度服务？",
+  "evidenceBoundary": {
+    "realInputs": [
+      "2026-06-24至30全馆当刻预约与区域签到至签退汇总，未扣暂离",
+      "用户确认314座、南窗与两台可分别设温/开关的柜机",
+      "一台28kW/9.18kW铭牌，另一台同规格为用户确认"
+    ],
+    "scenarios": [
+      "一楼逐时登记人数代理",
+      "四区人数分配",
+      "区域面积、热惯性、混合、供冷覆盖与温控响应",
+      "天气资料转为空间负荷的简化关系"
+    ],
+    "notValidated": [
+      "一楼实际在座人数",
+      "室内温度与局部温度场准确性",
+      "机组真实运行曲线",
+      "现场联网与节电"
+    ],
+    "historicalPowerUnavailable": true
+  },
+  "data": {
+    "trainingDates": [
+      "2026-06-24",
+      "2026-06-25",
+      "2026-06-26",
+      "2026-06-27",
+      "2026-06-28"
+    ],
+    "replayDates": [
+      "2026-06-29",
+      "2026-06-30"
+    ],
+    "replayRole": "已用于开发的历史回放，不能称未接触独立测试",
+    "occupancyIntervalMinutes": 30,
+    "currentPeopleDefinition": "训练期签到时长映射生成的一楼含暂离登记代理",
+    "spatialRules": [
+      "west",
+      "east",
+      "uniform",
+      "window"
+    ],
+    "weatherProjection": "起点天气保持，不读取未来实际天气",
+    "forecastAvailability": "仅下一半小时冻结点，按当前点保持至边界、预测点保持后续区间的近似"
+  },
+  "space": {
+    "floorSeats": 314,
+    "zones": [
+      "south-west",
+      "south-east",
+      "north-west",
+      "north-east"
+    ],
+    "map": "上西、下东、左南窗、右北",
+    "deviceGroups": [
+      [
+        0,
+        2
+      ],
+      [
+        1,
+        3
+      ]
+    ],
+    "zoneTemperatureMeaning": "四区平均空气温度，不是每座实温或CFD场"
+  },
+  "sharedPlant": {
+    "mixingWPerK": 300,
+    "coverage": "balanced",
+    "ownSegmentShare": 0.7,
+    "massMultiplier": 10,
+    "sensor": "localSouth",
+    "responseSeconds": 0,
+    "deadbandC": 0.5,
+    "compressorMinimumSeconds": 180,
+    "commandMinimumSeconds": 600,
+    "setpointMinimumSeconds": 300,
+    "stepSeconds": 15,
+    "nominalInputKwPerUnit": 9.18,
+    "nominalCoolingKwPerUnit": 28,
+    "assumedSensibleFraction": 0.75,
+    "allParametersUncalibrated": true
+  },
+  "controller": {
+    "decisionMinutes": 5,
+    "horizonMinutes": 30,
+    "permissionHoldMinutes": 20,
+    "setpointHoldMinutes": 20,
+    "guardMarginC": 0.1,
+    "guardDurationMinutes": 2,
+    "emptyObservedSlots": 2,
+    "beamWidth": 8,
+    "switchObjectiveWh": 20,
+    "actuatorActions": "各机关闭/设23℃/设24℃；保留固定覆盖，不控制压缩机频率、送风温度或独立网格风口",
+    "gateMeaning": "重算不等于发令；调整须满足触发与保持；首次允许提前准备仅在评价时段内",
+    "vacancyConfirmation": "至少两个不同且连续的半小时记录，本段代理均为0，且已知下一点未预计有人；未来计划不能新增已观测证据",
+    "comfortNotRelaxedByGuard": true,
+    "terminalHeatObjectiveRemoved": true,
+    "manufacturerHoldVerified": false,
+    "energyTieRule": "目标及调整次数相同，优先较少保留许可；仍须通过触发和保持检查，不凭空增加待机节电"
+  },
+  "modes": [
+    {
+      "id": "baseline_23",
+      "mainLabel": "日常基准",
+      "rule": "有人代理期间两台许可，设备固定23℃，内部温控相同；作为常用设温范围之一"
+    },
+    {
+      "id": "baseline_24",
+      "mainLabel": "日常基准",
+      "rule": "同上，固定24℃；两条基准分别展示，不按结果挑选或任意平均"
+    },
+    {
+      "id": "realtime",
+      "mainLabel": "实时感知情景",
+      "rule": "同一低频监督控制器、30分钟温度推演，未来人数保持当前值"
+    },
+    {
+      "id": "predictive",
+      "mainLabel": "预测协同情景",
+      "rule": "只将未来人数替换为冻结下一半小时预测；动作、触发、保持、搜索与天气信息一致"
+    }
+  ],
+  "informationControls": {
+    "persistenceAblation": "本版本实时模式本身就是同规划器人数保持对照，不再重复计为独立证据",
+    "oracleDiagnostic": "后续用相同控制器的事后未来人数代理作诊断；不可部署、不是真实在座，也不保证最优上界",
+    "formalComparisonStarted": false
+  },
+  "evaluation": {
+    "startMinute": 390,
+    "endMinute": 1350,
+    "initialTemperatureC": 24,
+    "warmStartSensitivityC": 26,
+    "windowMeaning": "06:30至22:30为人工评价窗口，不证明实际开放时刻",
+    "occupiedLowerC": 23,
+    "occupiedUpperC": 24,
+    "emptyLowerC": 20,
+    "emptyUpperC": 28,
+    "endStateReset": false,
+    "energyModel": "9.18kW×模拟制冷开启时间；风机/待机/启动与真实部分负荷曲线未知",
+    "lightingTreatment": "本空调模块42根18W灯固定全开，共0.756kW，照明控制另算，空调结论不混入照明节电",
+    "strictNumericalToleranceC": 0.000001,
+    "sampledRatioToleranceC": 1e-7,
+    "numericalToleranceIsMeasurementAccuracy": false,
+    "reportMetrics": [
+      "名义空调kWh",
+      "有人区采样达标比例",
+      "最大热/冷越界与℃·区分钟",
+      "空区越界",
+      "许可、设温和内部制冷状态切换分别统计",
+      "末温与储热差",
+      "失败决策及原因"
+    ],
+    "terminalComparisonToleranceC": 0.05,
+    "terminalToleranceIsAssumption": true,
+    "conditionalSavingEligibility": "比较双方有人/空区均采样通过且逐区末温差不超过0.05℃；同时列出储热差及步长敏感性。未满足时不生成达标节电率",
+    "restoration": "本模块不做恢复；若后续更换为共同恢复结算，须先更新协议并真实演算计入耗电，不能用理论COP折算冒充恢复实耗",
+    "negativeOrZeroForecastBenefitAllowed": true,
+    "noSavingsTarget": true,
+    "noAutomaticDeployment": true
+  },
+  "plannedSensitivity": {
+    "oneFactor": [
+      "mixing:1000,5000",
+      "coverage:southBiased,northBiased",
+      "mass:5,20",
+      "sensor:ownSegment,roomMean",
+      "response:30,120s"
+    ],
+    "spatialRules": [
+      "west",
+      "east",
+      "uniform",
+      "window"
+    ],
+    "supervisoryHoldMinutes": [
+      10,
+      20,
+      30
+    ],
+    "guardMarginC": [
+      0,
+      0.1,
+      0.2
+    ],
+    "stepSeconds": [
+      5,
+      15,
+      60
+    ],
+    "modelMismatch": "另外保留控制器与回放参数不同的组合；不声称单因素矩阵覆盖全部不确定性",
+    "syntheticStressSeparate": true,
+    "selectBestCaseAsFact": false
+  },
+  "scope": {
+    "thisModule": [
+      "候选评价协议",
+      "低频控制模型",
+      "保持/触发与退空证据测试",
+      "少量决策回放和频率/温度诊断"
+    ],
+    "deferred": [
+      "正式三策略与事后人数对照",
+      "主站整合",
+      "报告/PPT",
+      "发布"
+    ]
+  },
+  "inputHashes": [
+    {
+      "path": "data/building-inputs.js",
+      "sha256": "a410ea4c9e1a90bac3e0b7d6bce477f6174abedb2fbd3c159afa3d7654d6c2c5"
+    },
+    {
+      "path": "data/reservation-model.js",
+      "sha256": "e87bffd31bd5ae31166e2fa96fad020bbbaeb4d77ad01d93885771b79e139860"
+    },
+    {
+      "path": "data/reservation-profile.js",
+      "sha256": "405997e5034e0b99ca76fd9898c9e58393eb129e4ba1d8e10888882bd7257f74"
+    },
+    {
+      "path": "data/reservation-source.json",
+      "sha256": "20b2330ca8f250240ce1191070caff1d0f23a067041204dfc8582dcccd0dc2ff"
+    },
+    {
+      "path": "data/spatial-occupancy-model.js",
+      "sha256": "5e9a4453be707207e55a58820ede1fbce289f93981aa7ade8142af4ea039cab2"
+    },
+    {
+      "path": "data/spatial-thermal-model.js",
+      "sha256": "9c8891f722d16c0c4b1868476f114ef849ded1db9045768238d321e5e46ca416"
+    },
+    {
+      "path": "data/environment-dataset.js",
+      "sha256": "598fff63667581ead141911dc1c009645b3163ad2ccefcaaddd30cc0bc7a4254"
+    },
+    {
+      "path": "data/hvac-response-model.js",
+      "sha256": "0788b9635b5f6ee081e4baa6d6d92bdc3fbd5830d6060905506bd5fe9fed9f63"
+    },
+    {
+      "path": "data/hvac-predictive-model.js",
+      "sha256": "5916114572313bee0f737d9b4b5db99e8b7ee17ebdb7fad3f742a2cc12739208"
+    }
+  ]
+}

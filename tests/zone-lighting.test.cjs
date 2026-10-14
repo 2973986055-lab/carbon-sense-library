@@ -80,7 +80,7 @@ for(let minute=0;minute<720;minute++)for(let mode=0;mode<3;mode++) {
  near(future.modes[mode].trace[minute].temperatureC,result.modes[mode].trace[minute].temperatureC);
 }
 assert.equal(building.equipment.taskLighting,undefined);
-const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+const html=fs.readFileSync(path.join(__dirname,'../legacy-models-20261014.html'),'utf8');
 for(const id of ['controlDistribution','controlLightingPolicy','controlZoneTime','controlZoneMode','controlDaylightOutlook','controlZoneMap','controlLuxTarget','controlMethods'])assert.ok(html.includes(`id="${id}"`));
 const linkedScripts=[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>new URL(m[1],'https://example.test/').pathname);
 const lightingIndex=linkedScripts.indexOf('/data/zone-lighting-model.js');

@@ -1,0 +1,284 @@
+{
+  "id": "CARBON-FORECAST-TERMINAL-GUARD-CANDIDATE-01",
+  "version": "20261014-local",
+  "sourceFixedLightAblationSha256": "851f707303ff038515e2eaac57bd9c8defedd03c55138a2c6f1f4f2f93daa5ae",
+  "rule": "Run an online realtime shadow from the same observed current slot. Use the guarded frozen-forecast action unless its one-block modeled endpoint exceeds a linearly shrinking 1.5-to-0.05 C per-zone shadow envelope; then choose among device-legal actions by one-block service, envelope overflow, deviation and nominal energy.",
+  "initialAndFinalEnvelopeC": [
+    1.5,
+    0.05
+  ],
+  "usesFutureActual": false,
+  "status": "experimental uncalibrated model candidate; no deployment or site-saving claim",
+  "limitations": [
+    "The realtime shadow is a model counterfactual, not a measured indoor state.",
+    "One-block choices cannot guarantee a feasible end temperature or equal final device state.",
+    "June 29–30 have been repeatedly inspected during development and are not untouched validation.",
+    "Full-on lighting does not meet the 300 lx model target for every proxy occupant."
+  ],
+  "cases": [
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 300,
+      "referenceAblationCase": {
+        "realtimeHvacKwh": 168.60600000000585,
+        "originalPredictiveHvacKwh": 165.2400000000054,
+        "originalPredictiveTerminalDifferenceC": 2.7000854567393127
+      },
+      "shadow": {
+        "hvacKwh": 168.60599999999982,
+        "temperaturePass": false,
+        "occupiedCompliancePct": 56.388888888888886,
+        "finalTemperaturesC": [
+          24.235814197182027,
+          24.051961884033297,
+          23.355370339847365,
+          22.88005731454964
+        ]
+      },
+      "terminalGuardCandidate": {
+        "hvacKwh": 168.60599999999982,
+        "temperaturePass": false,
+        "occupiedCompliancePct": 56.388888888888886,
+        "finalTemperaturesC": [
+          24.235814197182027,
+          24.051961884033297,
+          23.355370339847365,
+          22.88005731454964
+        ],
+        "forecastSelectedCount": 76,
+        "overrideCount": 4,
+        "commandTraceSha256": "fc59ac3521849263d27b00aa7ed6305fc5fd8f4d581379dd843c2dedf92735ae"
+      },
+      "comparison": {
+        "nominalHvacDifferenceCandidateMinusShadowKwh": 0,
+        "terminalDifferenceC": 0,
+        "bothTemperaturePass": false,
+        "temperatureComparable": false,
+        "maximumEnvelopeOverflowC": 0,
+        "qualifiedSavingPct": null
+      },
+      "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+      "maxResidualJ": 1.1059455573558807e-7
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 1000,
+      "referenceAblationCase": {
+        "realtimeHvacKwh": 172.16325000000575,
+        "originalPredictiveHvacKwh": 169.75350000000543,
+        "originalPredictiveTerminalDifferenceC": 2.203378304729007
+      },
+      "shadow": {
+        "hvacKwh": 172.16324999999986,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          23.966959177696303,
+          23.028864961703576,
+          23.780411562812603,
+          22.726754695458787
+        ]
+      },
+      "terminalGuardCandidate": {
+        "hvacKwh": 172.08674999999985,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          24.008851979077594,
+          23.04156379031881,
+          23.82214598216879,
+          22.739426972444335
+        ],
+        "forecastSelectedCount": 78,
+        "overrideCount": 9,
+        "commandTraceSha256": "ffae713e36dd7d7f8ef573cd076deb3933feefce98a259837bfa94e794c9df84"
+      },
+      "comparison": {
+        "nominalHvacDifferenceCandidateMinusShadowKwh": -0.07650000000001,
+        "terminalDifferenceC": 0.04189280138129092,
+        "bothTemperaturePass": true,
+        "temperatureComparable": true,
+        "maximumEnvelopeOverflowC": 0,
+        "qualifiedSavingPct": null
+      },
+      "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+      "maxResidualJ": 1.130392774939537e-7
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 5000,
+      "referenceAblationCase": {
+        "realtimeHvacKwh": 172.4692500000066,
+        "originalPredictiveHvacKwh": 170.74800000000639,
+        "originalPredictiveTerminalDifferenceC": 1.0341917472757842
+      },
+      "shadow": {
+        "hvacKwh": 172.4692499999999,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          23.77898798316553,
+          23.747537168947744,
+          23.753799513330666,
+          23.706664060672452
+        ]
+      },
+      "terminalGuardCandidate": {
+        "hvacKwh": 171.9719999999998,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          24.21551243499027,
+          23.802132584980697,
+          24.191980343545293,
+          23.760503447038058
+        ],
+        "forecastSelectedCount": 79,
+        "overrideCount": 3,
+        "commandTraceSha256": "f9740f1f6078acc4ad66d5d9a9f4a5399b40c2c033e1bfb651b02714636fee2f"
+      },
+      "comparison": {
+        "nominalHvacDifferenceCandidateMinusShadowKwh": -0.49725000000009345,
+        "terminalDifferenceC": 0.43818083021462684,
+        "bothTemperaturePass": true,
+        "temperatureComparable": false,
+        "maximumEnvelopeOverflowC": 0.46645307062561703,
+        "qualifiedSavingPct": null
+      },
+      "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+      "maxResidualJ": 6.135087460279465e-8
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 300,
+      "referenceAblationCase": {
+        "realtimeHvacKwh": 153.11475000000613,
+        "originalPredictiveHvacKwh": 153.22950000000634,
+        "originalPredictiveTerminalDifferenceC": 0.0992962005082525
+      },
+      "shadow": {
+        "hvacKwh": 153.11474999999965,
+        "temperaturePass": false,
+        "occupiedCompliancePct": 69.88505747126437,
+        "finalTemperaturesC": [
+          22.793975138838558,
+          26.32535110594327,
+          22.640511881372102,
+          26.270284719362294
+        ]
+      },
+      "terminalGuardCandidate": {
+        "hvacKwh": 152.50274999999965,
+        "temperaturePass": false,
+        "occupiedCompliancePct": 70.20833333333333,
+        "finalTemperaturesC": [
+          23.13279531268765,
+          26.333647053132424,
+          23.033049808493207,
+          26.277950833535932
+        ],
+        "forecastSelectedCount": 96,
+        "overrideCount": 6,
+        "commandTraceSha256": "64a8ce1d9faa80854fb6fedc544ca2405ddc3f8f82da42ea6f86e695eb8bc1cb"
+      },
+      "comparison": {
+        "nominalHvacDifferenceCandidateMinusShadowKwh": -0.6119999999999948,
+        "terminalDifferenceC": 0.39253792712110425,
+        "bothTemperaturePass": false,
+        "temperatureComparable": false,
+        "maximumEnvelopeOverflowC": 0.6871654134133502,
+        "qualifiedSavingPct": null
+      },
+      "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+      "maxResidualJ": 1.1423253454267979e-7
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 1000,
+      "referenceAblationCase": {
+        "realtimeHvacKwh": 157.05450000000488,
+        "originalPredictiveHvacKwh": 157.43700000000496,
+        "originalPredictiveTerminalDifferenceC": 0.20373180690171822
+      },
+      "shadow": {
+        "hvacKwh": 157.05449999999982,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          23.935240197772988,
+          23.184759532737402,
+          23.976134555097605,
+          23.130401617791566
+        ]
+      },
+      "terminalGuardCandidate": {
+        "hvacKwh": 156.74849999999967,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          24.16657065036282,
+          23.098574296344534,
+          24.206689271053722,
+          23.058431140339895
+        ],
+        "forecastSelectedCount": 99,
+        "overrideCount": 16,
+        "commandTraceSha256": "546cc5c950458737bf5f382dc91c2b7d9121a61ab52a9d9fda8580ae62b3129b"
+      },
+      "comparison": {
+        "nominalHvacDifferenceCandidateMinusShadowKwh": -0.3060000000001537,
+        "terminalDifferenceC": 0.23133045258983387,
+        "bothTemperaturePass": true,
+        "temperatureComparable": false,
+        "maximumEnvelopeOverflowC": 1.3600296012229411,
+        "qualifiedSavingPct": null
+      },
+      "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+      "maxResidualJ": 1.1068186722695827e-7
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 5000,
+      "referenceAblationCase": {
+        "realtimeHvacKwh": 157.47525000000658,
+        "originalPredictiveHvacKwh": 157.47525000000658,
+        "originalPredictiveTerminalDifferenceC": 0
+      },
+      "shadow": {
+        "hvacKwh": 157.4752499999998,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          23.96997747412268,
+          24.179650339582157,
+          23.98222350115734,
+          24.181465862733575
+        ]
+      },
+      "terminalGuardCandidate": {
+        "hvacKwh": 157.4752499999998,
+        "temperaturePass": true,
+        "occupiedCompliancePct": 100,
+        "finalTemperaturesC": [
+          23.96997747412268,
+          24.179650339582157,
+          23.98222350115734,
+          24.181465862733575
+        ],
+        "forecastSelectedCount": 99,
+        "overrideCount": 0,
+        "commandTraceSha256": "588e83795b6354ab86bd88b6837858949c6efa3152af040773d7fa7c1ec323e5"
+      },
+      "comparison": {
+        "nominalHvacDifferenceCandidateMinusShadowKwh": 0,
+        "terminalDifferenceC": 0,
+        "bothTemperaturePass": true,
+        "temperatureComparable": true,
+        "maximumEnvelopeOverflowC": 0,
+        "qualifiedSavingPct": null
+      },
+      "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+      "maxResidualJ": 6.063783075660467e-8
+    }
+  ]
+}

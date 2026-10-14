@@ -1,0 +1,29 @@
+{
+  "id": "CARBON-HVAC-COMFORT-V2",
+  "date": "2026-10-13",
+  "status": "user_selected_candidate_unvalidated",
+  "parentProtocolId": "CARBON-HVAC-EVAL-V1",
+  "scope": "Only the occupied-zone room-air temperature acceptance band is revised; the original protocol and prior controller remain intact.",
+  "userChoice": "把26℃作为舒适上限参考，并将原23℃下限向下允许0.8℃、26℃上限向上允许0.8℃。",
+  "occupiedRoomAirC": {
+    "lower": 22.2,
+    "upper": 26.8,
+    "lowerReferenceC": 23,
+    "upperReferenceC": 26,
+    "allowanceC": 0.8,
+    "appliesTo": "modelled average air temperature of an occupied region",
+    "isDeviceSetpoint": false,
+    "isMeasuredComfortStandard": false
+  },
+  "emptyRoomAirC": {
+    "lower": 20,
+    "upper": 28,
+    "unchangedFromParent": true
+  },
+  "currentReplayMeaning": "Historical 23/24℃ controller outputs may be rescored against this new band, but this does not mean the controller maintained a 26℃ room-temperature target.",
+  "nextControllerRequirement": "Re-optimize each compared mode under the same new acceptance band, keep device setpoint distinct from room temperature, and preserve the original two-machine actuation limits.",
+  "comparisonGate": "No qualified saving percentage until both compared runs pass the same occupied and empty temperature checks, have comparable end temperatures under the declared settlement method, and use the same plant and information protocol.",
+  "evidenceLimit": "No measured indoor temperature, occupancy, airflow, operating electricity, or calibrated thermal parameters; the band is a user-selected scenario and is not claimed to be a competition or national-standard threshold.",
+  "websiteReportPptStatus": "unchanged",
+  "publicationStatus": "not_authorized"
+}

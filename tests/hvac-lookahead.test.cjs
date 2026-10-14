@@ -54,6 +54,6 @@ for(let minute=0;minute<720;minute++)for(let i=0;i<3;i++) {
 const ahead=m.simulateDay(records,a,{...input,leadMinutes:15});
 assert.ok(ahead.modes[2].firstArrivalTemperatureC<result.modes[2].firstArrivalTemperatureC);
 assert.ok(ahead.modes[2].preArrivalCoolingMinutes>0);
-const html=fs.readFileSync(path.join(__dirname,'../index.html'),'utf8');
+const html=fs.readFileSync(path.join(__dirname,'../legacy-models-20261014.html'),'utf8');
 for(const id of ['controlHvacTime','controlHvacActions','controlHvacCandidates','controlHvacForecast','controlHvacMinOn','controlHvacMinOff'])assert.ok(html.includes(`id="${id}"`));
 console.log('HVAC lookahead passed: room-state heat balance, shared request holds, occupied-period forecast influence, candidate cost / electricity separation, causal rollout, observed violations and pre-arrival choice.');

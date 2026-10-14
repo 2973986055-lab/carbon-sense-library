@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="阅碳智控模块1：当前与未来空间占用情景，待验收的独立本地预览。">
+  <title>阅碳智控 · 空间占用模块验收</title>
+  <link rel="stylesheet" href="data/spatial-occupancy-panel.css?v=module1-v2-20261013">
+</head>
+<body>
+  <main class="spatial-page">
+    <header class="module-header"><a href="index.html#controlComparison">← 返回现有三策略系统</a><span>MODULE 01 <b>待你验收</b></span></header>
+    <section class="intro"><p class="eyebrow">阅碳智控 / 空间占用与预测需求</p><h1>先看哪里有人，<br>再讨论怎样供冷。</h1><p>同一个总人数，可以对应不同的空间需求。本模块只展示当前分布和下一半小时的分配情景，作为后续空间热模型的输入。</p></section>
+    <ol class="workflow" aria-label="分模块进度"><li class="current"><b>01</b><span>空间占用<small>本轮待验收</small></span></li><li><b>02</b><span>空间热模型<small>尚未开始</small></span></li><li><b>03</b><span>空调决策<small>尚未开始</small></span></li><li><b>04</b><span>主网站整合<small>尚未开始</small></span></li></ol>
+    <p class="geometry-note">方位修订版：仅南侧（图左）有窗，上西、下东、右北。四区参照座位编号和横向通道归并，图示不按实际面积比例绘制。</p>
+    <section class="spatial-card inputs" aria-labelledby="inputHeading"><div class="section-heading"><div><p class="eyebrow">输入与分布假设</p><h2 id="inputHeading">选择一个空间情景</h2></div><button id="spatialReset" type="button">重置</button></div>
+      <div class="input-grid"><label>历史日期<select id="spatialDate"></select></label><label>预测起点<select id="spatialTime"></select></label><label>当前一楼人数<input id="spatialPeople" type="number" min="0" max="314" step="1" inputmode="numeric"><small>含暂离登记代理或手动情景</small></label><label>当前分布<select id="spatialPattern"><option value="uniform">均匀分散</option><option value="window">优先南侧靠窗（图左）</option><option value="inner">优先北侧内侧（图右）</option><option value="west">优先西段（图上）</option><option value="east">优先东段（图下）</option></select></label><label>未来分布规则<select id="spatialFuturePattern"><option value="same">沿用当前规则</option><option value="uniform">手动指定：均匀分散</option><option value="window">手动指定：南侧靠窗</option><option value="inner">手动指定：北侧内侧</option><option value="west">手动指定：西段</option><option value="east">手动指定：东段</option></select><small>规则变化是手动情景，不是模型预测迁移</small></label></div>
+      <div class="input-actions"><button id="spatialLoadHistory" type="button">载入该时刻登记代理</button><div class="example-buttons" aria-label="人工人数例子"><span>人工例子</span><button type="button" data-spatial-people="0">0人</button><button type="button" data-spatial-people="80">80人</button><button type="button" data-spatial-people="160">160人</button><button type="button" data-spatial-people="314">314人</button></div></div>
+      <p id="spatialInputFeedback" class="feedback" role="status"></p><p id="spatialDataScope" class="scope-note"></p>
+    </section>
+    <section class="snapshot-grid" aria-label="当前与未来分布"><article class="spatial-card snapshot"><div class="snapshot-heading"><div><p class="eyebrow">当前空间情景</p><h2 id="spatialCurrentTime">—</h2></div><div class="people-total"><strong id="spatialCurrentTotal">—</strong><span>人 / 314座</span></div></div><p id="spatialCurrentLabel" class="map-label"></p><div class="map-compass">西 · 图上</div><div class="map-layout"><div class="south-window-rail">南窗</div><div class="map-body"><div class="map-orientation"><span>南侧 · 靠窗</span><span>北侧 · 无外窗</span></div><div id="spatialCurrentMap" class="occupancy-map"></div></div></div><div class="map-compass">东 · 图下</div><p id="spatialCurrentOccupied" class="map-foot"></p></article>
+      <article class="spatial-card snapshot future"><div class="snapshot-heading"><div><p class="eyebrow">下一半小时分配情景</p><h2 id="spatialFutureTime">—</h2></div><div class="people-total"><strong id="spatialFutureTotal">—</strong><span id="spatialFutureUnit">人 / 314座</span></div></div><p id="spatialFutureLabel" class="map-label"></p><div class="map-compass">西 · 图上</div><div class="map-layout"><div class="south-window-rail">南窗</div><div class="map-body"><div class="map-orientation"><span>南侧 · 靠窗</span><span>北侧 · 无外窗</span></div><div id="spatialFutureMap" class="occupancy-map"></div></div></div><div class="map-compass">东 · 图下</div><p id="spatialFutureOccupied" class="map-foot"></p></article></section>
+    <section class="spatial-card changes" aria-labelledby="changeHeading"><div class="section-heading"><div><p class="eyebrow">区域变化与可复核输入</p><h2 id="changeHeading">总数守恒，变化有来源</h2></div></div><div class="table-wrap"><table><thead><tr><th scope="col">计算区</th><th scope="col">当前人数</th><th scope="col">未来人数</th><th scope="col">变化</th><th scope="col">情景状态</th></tr></thead><tbody id="spatialChangeRows"></tbody></table></div><p id="spatialConservation" class="conservation"></p><p id="spatialForecastMethod" class="scope-note"></p><details><summary>查看座位归并与模块边界</summary><p>按座位图的编号范围和较宽横向通道归并：南侧西段91—160号（70座），南侧东段1—90号（90座）；北侧西段245—314号（70座），北侧东段161—244号（84座）。南侧合计160座，北侧154座，合计314座。</p><p>仅南侧有外窗。四区是同一开放房间的计算分组，各区面积未知；房间约378㎡仍为未实测假设。旧69/88分组及81/108㎡分配已撤回，本模块不套用照明分组或声称灯位对应已核实。</p><p>两台空调已确认位于南窗侧，朝北侧送风，可以分别开启；沿窗墙的准确位置和覆盖尚未核实。</p><p>当前与未来区域人数按规则分配，空区标记不证明现场无人。本模块尚不计算区域温度、空调动作、用电或节电。</p><p>后续室温要求只约束有人区域23—24℃，空区可放宽；空区上限、交叉供冷和区域换热待下一模块明确。现有主网站尚未同步此次方位修订。</p></details></section>
+    <footer class="approval-note"><strong>模块1完成后等待验收</strong><p>请先检查四区划分、分布规则和当前／未来人数表达。得到你的同意后，再进入空间热模型。此页为独立本地预览，没有发布或控制现场设备。</p></footer>
+  </main>
+  <script src="data/reservation-model.js?v=module1-20261013"></script>
+  <script src="data/reservation-profile.js?v=module1-20261013"></script>
+  <script src="data/environment-dataset.js?v=module1-20261013"></script>
+  <script src="data/spatial-occupancy-model.js?v=module1-v2-20261013"></script>
+  <script src="data/spatial-occupancy-panel.js?v=module1-v2-20261013"></script>
+</body>
+</html>

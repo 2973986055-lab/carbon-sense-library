@@ -1,0 +1,44 @@
+{
+  "version": "20261014-space-sync-local",
+  "status": "local_unpublished",
+  "dataSha256": "d4dcfd287c672f4e6da335d33ea404d7f7caca4748a298a71a538645b4ef2b3e",
+  "sources": [
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 300,
+      "file": "2026-06-29_mix300_joint.json",
+      "sha256": "89a0e7025b00891f3597542a63c2a9de02434a6134faee14b22a6be3fdaf64e7"
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 1000,
+      "file": "2026-06-29_mix1000_joint.json",
+      "sha256": "9ce6358b8f45be193c807aeb0cdedaa52b8e46c6d0eb68ae83a761c909d6829b"
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 5000,
+      "file": "2026-06-29_mix5000_joint.json",
+      "sha256": "1633d35ca0421c92954fda7069d347d137d2049fd9438ed6f5c52199e3a6f0d8"
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 300,
+      "file": "2026-06-30_mix300_joint.json",
+      "sha256": "c48b505ca18694e36100dcd2c6c9328185afa1efa66b91142e1ece4475c29c84"
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 1000,
+      "file": "2026-06-30_mix1000_joint.json",
+      "sha256": "5c125e39080f0c9d4fe3baaf349fbd5e4560d46efa52638ac8656c9b36fdf25d"
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 5000,
+      "file": "2026-06-30_mix5000_joint.json",
+      "sha256": "8f85ff1ca268c5d8cd320af94fbc00883a2206a2e49a56254a84e7c87debb14f"
+    }
+  ],
+  "limitation": "Four-zone people allocation and 14 lamp-group position are hypothetical; zone temperatures are modeled, not measured."
+}

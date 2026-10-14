@@ -1,0 +1,314 @@
+{
+  "id": "CARBON-FORECAST-TERMINAL-LEDGER-01",
+  "version": "20261014-local",
+  "sourceAblationSha256": "851f707303ff038515e2eaac57bd9c8defedd03c55138a2c6f1f4f2f93daa5ae",
+  "calculation": "sum over four zones of C_zone × (T_predictive_end − T_realtime_end) / 3,600,000 J/kWh",
+  "capacitySource": "Uncalibrated equivalent air-and-building thermal mass in spatial-thermal-model.js.",
+  "defaultMassMultiplier": 10,
+  "sensitivityMultipliers": [
+    5,
+    10,
+    20
+  ],
+  "sensitivityMeaning": "The 5× and 20× columns hold the frozen 10× terminal temperatures fixed; they change only the heat-capacity accounting, not controller decisions or trajectories.",
+  "interpretation": "Positive heat means the predictive run ends warmer; it does not equal deferred electricity or required next-day cooling.",
+  "noRecoveryCalculation": true,
+  "noCopElectricityConversion": true,
+  "noQualifiedSavingPct": true,
+  "cases": [
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 300,
+      "finalTemperatureDifferencePredictiveMinusRealtimeC": [
+        0.5779683909542612,
+        2.5546098319850543,
+        0.6496906366575281,
+        2.7000854567393127
+      ],
+      "maximumAbsoluteDifferenceC": 2.7000854567393127,
+      "nominalHvacDifferencePredictiveMinusRealtimeKwh": -3.36600000000044,
+      "bothTemperaturePass": false,
+      "terminalComparable": false,
+      "storedSensibleHeatSensitivity": [
+        {
+          "massMultiplier": 5,
+          "totalHeatCapacityKwhThermalPerK": 2.21823,
+          "byZoneKwhThermal": [
+            0.3205167059666177,
+            1.4166780419010516,
+            0.3602908152382071,
+            1.4973526406757114
+          ],
+          "totalKwhThermal": 3.594838203781588
+        },
+        {
+          "massMultiplier": 10,
+          "totalHeatCapacityKwhThermalPerK": 4.43646,
+          "byZoneKwhThermal": [
+            0.6410334119332354,
+            2.8333560838021032,
+            0.7205816304764142,
+            2.9947052813514228
+          ],
+          "totalKwhThermal": 7.189676407563176
+        },
+        {
+          "massMultiplier": 20,
+          "totalHeatCapacityKwhThermalPerK": 8.87292,
+          "byZoneKwhThermal": [
+            1.2820668238664708,
+            5.6667121676042065,
+            1.4411632609528284,
+            5.9894105627028456
+          ],
+          "totalKwhThermal": 14.379352815126351
+        }
+      ]
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 1000,
+      "finalTemperatureDifferencePredictiveMinusRealtimeC": [
+        0.1301572357865055,
+        2.1241106948001764,
+        0.14823284417515126,
+        2.203378304729007
+      ],
+      "maximumAbsoluteDifferenceC": 2.203378304729007,
+      "nominalHvacDifferencePredictiveMinusRealtimeKwh": -2.409750000000315,
+      "bothTemperaturePass": true,
+      "terminalComparable": false,
+      "storedSensibleHeatSensitivity": [
+        {
+          "massMultiplier": 5,
+          "totalHeatCapacityKwhThermalPerK": 2.21823,
+          "byZoneKwhThermal": [
+            0.07217967128467502,
+            1.177941516631649,
+            0.08220363548366144,
+            1.2218999642247563
+          ],
+          "totalKwhThermal": 2.554224787624742
+        },
+        {
+          "massMultiplier": 10,
+          "totalHeatCapacityKwhThermalPerK": 4.43646,
+          "byZoneKwhThermal": [
+            0.14435934256935004,
+            2.355883033263298,
+            0.16440727096732288,
+            2.4437999284495127
+          ],
+          "totalKwhThermal": 5.108449575249484
+        },
+        {
+          "massMultiplier": 20,
+          "totalHeatCapacityKwhThermalPerK": 8.87292,
+          "byZoneKwhThermal": [
+            0.2887186851387001,
+            4.711766066526596,
+            0.32881454193464577,
+            4.887599856899025
+          ],
+          "totalKwhThermal": 10.216899150498968
+        }
+      ]
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 5000,
+      "finalTemperatureDifferencePredictiveMinusRealtimeC": [
+        0.6422814976390647,
+        1.0243363230347846,
+        0.6494942121491611,
+        1.0341917472757842
+      ],
+      "maximumAbsoluteDifferenceC": 1.0341917472757842,
+      "nominalHvacDifferencePredictiveMinusRealtimeKwh": -1.721250000000225,
+      "bothTemperaturePass": true,
+      "terminalComparable": false,
+      "storedSensibleHeatSensitivity": [
+        {
+          "massMultiplier": 5,
+          "totalHeatCapacityKwhThermalPerK": 2.21823,
+          "byZoneKwhThermal": [
+            0.3561820216269756,
+            0.5680533904613626,
+            0.3601818865539084,
+            0.5735187898898907
+          ],
+          "totalKwhThermal": 1.8579360885321372
+        },
+        {
+          "massMultiplier": 10,
+          "totalHeatCapacityKwhThermalPerK": 4.43646,
+          "byZoneKwhThermal": [
+            0.7123640432539512,
+            1.1361067809227252,
+            0.7203637731078169,
+            1.1470375797797814
+          ],
+          "totalKwhThermal": 3.7158721770642744
+        },
+        {
+          "massMultiplier": 20,
+          "totalHeatCapacityKwhThermalPerK": 8.87292,
+          "byZoneKwhThermal": [
+            1.4247280865079024,
+            2.2722135618454504,
+            1.4407275462156337,
+            2.2940751595595628
+          ],
+          "totalKwhThermal": 7.431744354128549
+        }
+      ]
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 300,
+      "finalTemperatureDifferencePredictiveMinusRealtimeC": [
+        -0.01466316092471942,
+        -0.08105519234934278,
+        -0.021046613454799967,
+        -0.0992962005082525
+      ],
+      "maximumAbsoluteDifferenceC": 0.0992962005082525,
+      "nominalHvacDifferencePredictiveMinusRealtimeKwh": 0.11475000000021396,
+      "bothTemperaturePass": false,
+      "terminalComparable": false,
+      "storedSensibleHeatSensitivity": [
+        {
+          "massMultiplier": 5,
+          "totalHeatCapacityKwhThermalPerK": 2.21823,
+          "byZoneKwhThermal": [
+            -0.00813156586451009,
+            -0.04494976483127066,
+            -0.011671557340960233,
+            -0.05506545271335524
+          ],
+          "totalKwhThermal": -0.11981834075009622
+        },
+        {
+          "massMultiplier": 10,
+          "totalHeatCapacityKwhThermalPerK": 4.43646,
+          "byZoneKwhThermal": [
+            -0.01626313172902018,
+            -0.08989952966254132,
+            -0.023343114681920466,
+            -0.11013090542671047
+          ],
+          "totalKwhThermal": -0.23963668150019243
+        },
+        {
+          "massMultiplier": 20,
+          "totalHeatCapacityKwhThermalPerK": 8.87292,
+          "byZoneKwhThermal": [
+            -0.03252626345804036,
+            -0.17979905932508264,
+            -0.04668622936384093,
+            -0.22026181085342095
+          ],
+          "totalKwhThermal": -0.47927336300038487
+        }
+      ]
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 1000,
+      "finalTemperatureDifferencePredictiveMinusRealtimeC": [
+        -0.0370260087532337,
+        -0.20219932963299314,
+        -0.03605975182103194,
+        -0.20373180690171822
+      ],
+      "maximumAbsoluteDifferenceC": 0.20373180690171822,
+      "nominalHvacDifferencePredictiveMinusRealtimeKwh": 0.38250000000007844,
+      "bothTemperaturePass": true,
+      "terminalComparable": false,
+      "storedSensibleHeatSensitivity": [
+        {
+          "massMultiplier": 5,
+          "totalHeatCapacityKwhThermalPerK": 2.21823,
+          "byZoneKwhThermal": [
+            -0.020533050849171397,
+            -0.1121311547429486,
+            -0.01999720582049192,
+            -0.11298100150589961
+          ],
+          "totalKwhThermal": -0.26564241291851154
+        },
+        {
+          "massMultiplier": 10,
+          "totalHeatCapacityKwhThermalPerK": 4.43646,
+          "byZoneKwhThermal": [
+            -0.041066101698342794,
+            -0.2242623094858972,
+            -0.03999441164098384,
+            -0.22596200301179922
+          ],
+          "totalKwhThermal": -0.5312848258370231
+        },
+        {
+          "massMultiplier": 20,
+          "totalHeatCapacityKwhThermalPerK": 8.87292,
+          "byZoneKwhThermal": [
+            -0.08213220339668559,
+            -0.4485246189717944,
+            -0.07998882328196769,
+            -0.45192400602359845
+          ],
+          "totalKwhThermal": -1.0625696516740462
+        }
+      ]
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 5000,
+      "finalTemperatureDifferencePredictiveMinusRealtimeC": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "maximumAbsoluteDifferenceC": 0,
+      "nominalHvacDifferencePredictiveMinusRealtimeKwh": 0,
+      "bothTemperaturePass": true,
+      "terminalComparable": true,
+      "storedSensibleHeatSensitivity": [
+        {
+          "massMultiplier": 5,
+          "totalHeatCapacityKwhThermalPerK": 2.21823,
+          "byZoneKwhThermal": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "totalKwhThermal": 0
+        },
+        {
+          "massMultiplier": 10,
+          "totalHeatCapacityKwhThermalPerK": 4.43646,
+          "byZoneKwhThermal": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "totalKwhThermal": 0
+        },
+        {
+          "massMultiplier": 20,
+          "totalHeatCapacityKwhThermalPerK": 8.87292,
+          "byZoneKwhThermal": [
+            0,
+            0,
+            0,
+            0
+          ],
+          "totalKwhThermal": 0
+        }
+      ]
+    }
+  ]
+}

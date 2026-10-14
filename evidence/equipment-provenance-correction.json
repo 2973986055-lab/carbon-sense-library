@@ -1,0 +1,24 @@
+{
+  "id": "CARBON-EQUIPMENT-PROVENANCE-01",
+  "recordedOn": "2026-10-14",
+  "scope": "metadata correction for frozen historical replays; no numerical input or output change",
+  "frozenSource": {
+    "path": "data/environment-dataset.js",
+    "sha256": "598fff63667581ead141911dc1c009645b3163ad2ccefcaaddd30cc0bc7a4254",
+    "field": "equipment.airConditioners.secondUnitSameRating",
+    "originalValue": "待核实，当前按同规格假设"
+  },
+  "currentSource": {
+    "path": "data/building-inputs.js",
+    "sha256": "a410ea4c9e1a90bac3e0b7d6bce477f6174abedb2fbd3c159afa3d7654d6c2c5",
+    "confirmationDate": "2026-10-11",
+    "confirmationBasis": "用户在对话中确认第二台与第一台同规格；尚无第二台铭牌照片",
+    "unitCount": 2,
+    "modelOnFirstPhotographedLabel": "KFRd-280LW/730A",
+    "ratedInputKwPerUnit": 9.18,
+    "ratedCoolingKwPerUnit": 28,
+    "photographedLabelCount": 1
+  },
+  "interpretation": "两机按同规格进入情景测算；第二台规格依据用户确认，不等于第二台铭牌独立核验。额定输入不是运行功率实测。",
+  "replayImpact": "none; frozen source and six replay hashes remain unchanged"
+}

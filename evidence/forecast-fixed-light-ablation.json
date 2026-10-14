@@ -1,0 +1,479 @@
+{
+  "id": "CARBON-FIXED-LIGHT-FORECAST-ABLATION-01",
+  "version": "20261014-fixed-light-local",
+  "scenario": "Both HVAC modes use the same 42-lamp full-on schedule and four-region lamp heat; only frozen forecast versus persistence changes.",
+  "period": "2026-06-29 to 2026-06-30, 06:30–22:30",
+  "lightSchedule": "42 × 18 W continuously during the 16-hour replay; not a site meter reading",
+  "modelSourceSha256": {
+    "building-inputs": "a410ea4c9e1a90bac3e0b7d6bce477f6174abedb2fbd3c159afa3d7654d6c2c5",
+    "reservation-model": "e87bffd31bd5ae31166e2fa96fad020bbbaeb4d77ad01d93885771b79e139860",
+    "reservation-profile": "405997e5034e0b99ca76fd9898c9e58393eb129e4ba1d8e10888882bd7257f74",
+    "spatial-occupancy-model": "5e9a4453be707207e55a58820ede1fbce289f93981aa7ade8142af4ea039cab2",
+    "spatial-thermal-model": "9c8891f722d16c0c4b1868476f114ef849ded1db9045768238d321e5e46ca416",
+    "environment-dataset": "598fff63667581ead141911dc1c009645b3163ad2ccefcaaddd30cc0bc7a4254",
+    "hvac-response-model": "0788b9635b5f6ee081e4baa6d6d92bdc3fbd5830d6060905506bd5fe9fed9f63",
+    "hvac-predictive-model": "5916114572313bee0f737d9b4b5db99e8b7ee17ebdb7fad3f742a2cc12739208",
+    "hvac-supervisory-model": "31fc314dcbdc36b69e30beb37d323f241f767a62cbe2f24c28398fe0ed207cf3",
+    "hvac-comfort-v2-model": "dfed0b3585bf8bfc1d1b5ce71f1b7201c1cec9dd753e79649e6ae7cbb3125cc5",
+    "hvac-three-mode-v2-model": "cf9964812db9a04efc50179d844a429374c643bc99c2375d32e09766d2023b92",
+    "hvac-forecast-guard-v3-model": "70fb343d43d1a98be36a2ae310e207cb0f11e98595481bd854d53f3292766653",
+    "lighting-hvac-joint-model": "c757e219139e2b41f9cd2fcd04cd290718cca0802f32b96ac81d4b5a8b4ca9c1"
+  },
+  "limitations": [
+    "Four-region occupancy, lighting position, mixing, thermal response and HVAC power are uncalibrated scenarios.",
+    "The full-on 300 lx model screen is not met for every proxy occupant; no measured room temperature, desktop illuminance or electricity.",
+    "June 29–30 were repeatedly inspected during development; this is not an untouched independent test."
+  ],
+  "cases": [
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 300,
+      "sourceReplay": "2026-06-29_mix300_joint.json",
+      "sourceReplaySha256": "89a0e7025b00891f3597542a63c2a9de02434a6134faee14b22a6be3fdaf64e7",
+      "modes": {
+        "baseline": {
+          "mode": "baseline",
+          "hvacKwh": 177.59475000000697,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 59.04558404558404,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 5.981363034243131,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            24.019101714688087,
+            24.067215620665348,
+            22.794521242220814,
+            22.55377970830871
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "e8c02c0ce58a9cf17055813993f27434be9644247d35188356ac6146cf9ad2c8",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.0104849934577942e-7
+        },
+        "realtime": {
+          "mode": "realtime",
+          "hvacKwh": 168.60600000000585,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 56.388888888888886,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 1.953885040535397,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            24.235814197182027,
+            24.051961884033297,
+            23.355370339847365,
+            22.88005731454964
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "8bc4eb9ddf8b2ad3a4a0fc4ce67c8956ec24e393d20ab658f3c2b79aba8508b5",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.1059455573558807e-7
+        },
+        "predictive": {
+          "mode": "predictive",
+          "hvacKwh": 165.2400000000054,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 56.388888888888886,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 1.953885040535397,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            24.813782588136288,
+            26.60657171601835,
+            24.005060976504893,
+            25.58014277128895
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "3df03fee3561dd436b0629d98c5240b9632ab298f0d416a3b45a5e3c88e74ff0",
+          "forecastSelectedCount": 76,
+          "sameStateCommandChanges": 1,
+          "maxResidualJ": 1.1059455573558807e-7
+        }
+      },
+      "predictiveVsRealtime": {
+        "hvacDifferenceKwh": -3.36600000000044,
+        "commandDifferenceSlots": 9,
+        "terminalDifferenceC": 2.7000854567393127,
+        "temperatureComparable": false,
+        "qualifiedSavingPct": null
+      }
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 1000,
+      "sourceReplay": "2026-06-29_mix1000_joint.json",
+      "sourceReplaySha256": "9ce6358b8f45be193c807aeb0cdedaa52b8e46c6d0eb68ae83a761c909d6829b",
+      "modes": {
+        "baseline": {
+          "mode": "baseline",
+          "hvacKwh": 174.84075000000692,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 80.64102564102564,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 1.1308837236966554,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.855913323490828,
+            23.86036843228141,
+            23.686066035113353,
+            23.610451458811113
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "e8c02c0ce58a9cf17055813993f27434be9644247d35188356ac6146cf9ad2c8",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.0507210390642285e-7
+        },
+        "realtime": {
+          "mode": "realtime",
+          "hvacKwh": 172.16325000000575,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.966959177696303,
+            23.028864961703576,
+            23.780411562812603,
+            22.726754695458787
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "efbbacec0339315bbaaad725288f4685b4d1261ff1ad5ba7a97f172137200485",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.1266092769801617e-7
+        },
+        "predictive": {
+          "mode": "predictive",
+          "hvacKwh": 169.75350000000543,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            24.09711641348281,
+            25.152975656503752,
+            23.928644406987754,
+            24.930133000187794
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "dcd0881279d55ad4feb17571da59d775f03fc233dfe854454240ed3b3c4c7b11",
+          "forecastSelectedCount": 78,
+          "sameStateCommandChanges": 2,
+          "maxResidualJ": 1.130392774939537e-7
+        }
+      },
+      "predictiveVsRealtime": {
+        "hvacDifferenceKwh": -2.409750000000315,
+        "commandDifferenceSlots": 26,
+        "terminalDifferenceC": 2.203378304729007,
+        "temperatureComparable": false,
+        "qualifiedSavingPct": null
+      }
+    },
+    {
+      "date": "2026-06-29",
+      "mixingWPerK": 5000,
+      "sourceReplay": "2026-06-29_mix5000_joint.json",
+      "sourceReplaySha256": "1633d35ca0421c92954fda7069d347d137d2049fd9438ed6f5c52199e3a6f0d8",
+      "modes": {
+        "baseline": {
+          "mode": "baseline",
+          "hvacKwh": 173.8845000000062,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.880453761216845,
+            23.8529305700578,
+            23.855841663288768,
+            23.812661798181153
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "e8c02c0ce58a9cf17055813993f27434be9644247d35188356ac6146cf9ad2c8",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 6.309710443019867e-8
+        },
+        "realtime": {
+          "mode": "realtime",
+          "hvacKwh": 172.4692500000066,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.77898798316553,
+            23.747537168947744,
+            23.753799513330666,
+            23.706664060672452
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "7e548d30bdaf4ee9bbea4feb9684ce51dea14316333a75142bf4b0edc64e5062",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 6.135087460279465e-8
+        },
+        "predictive": {
+          "mode": "predictive",
+          "hvacKwh": 170.74800000000639,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            24.421269480804593,
+            24.77187349198253,
+            24.403293725479827,
+            24.740855807948236
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "d126ffaeb3918db9634ec731db3ee292e99ff63af9b97fb97fda133db14c3b62",
+          "forecastSelectedCount": 79,
+          "sameStateCommandChanges": 1,
+          "maxResidualJ": 6.135087460279465e-8
+        }
+      },
+      "predictiveVsRealtime": {
+        "hvacDifferenceKwh": -1.721250000000225,
+        "commandDifferenceSlots": 11,
+        "terminalDifferenceC": 1.0341917472757842,
+        "temperatureComparable": false,
+        "qualifiedSavingPct": null
+      }
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 300,
+      "sourceReplay": "2026-06-30_mix300_joint.json",
+      "sourceReplaySha256": "c48b505ca18694e36100dcd2c6c9328185afa1efa66b91142e1ece4475c29c84",
+      "modes": {
+        "baseline": {
+          "mode": "baseline",
+          "hvacKwh": 161.8357500000052,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 64.10919540229885,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 4.9635101774309405,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.834422784095135,
+            24.244870484261643,
+            23.58033795808894,
+            23.76037469557959
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "e8c02c0ce58a9cf17055813993f27434be9644247d35188356ac6146cf9ad2c8",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 9.639188647270203e-8
+        },
+        "realtime": {
+          "mode": "realtime",
+          "hvacKwh": 153.11475000000613,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 69.88505747126437,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 1.5408801244771873,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            22.793975138838558,
+            26.32535110594327,
+            22.640511881372102,
+            26.270284719362294
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "9a28fb6f0a1297c70944bf2fafdba650c00034260c5277de4dd3a3efa1474f4a",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.0436633601784706e-7
+        },
+        "predictive": {
+          "mode": "predictive",
+          "hvacKwh": 153.22950000000634,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 68.97270114942529,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 1.4852076611007128,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            22.77931197791384,
+            26.244295913593927,
+            22.619465267917302,
+            26.170988518854042
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "5005b444b08b50e5c425af04ba2f229fa51d1f52eeb61b3e1aefebc0b6893ded",
+          "forecastSelectedCount": 95,
+          "sameStateCommandChanges": 1,
+          "maxResidualJ": 9.886571206152439e-8
+        }
+      },
+      "predictiveVsRealtime": {
+        "hvacDifferenceKwh": 0.11475000000021396,
+        "commandDifferenceSlots": 68,
+        "terminalDifferenceC": 0.0992962005082525,
+        "temperatureComparable": false,
+        "qualifiedSavingPct": null
+      }
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 1000,
+      "sourceReplay": "2026-06-30_mix1000_joint.json",
+      "sourceReplaySha256": "5c125e39080f0c9d4fe3baaf349fbd5e4560d46efa52638ac8656c9b36fdf25d",
+      "modes": {
+        "baseline": {
+          "mode": "baseline",
+          "hvacKwh": 159.77025000000603,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 85.35919540229885,
+          "temperaturePass": false,
+          "maximumOccupiedViolationC": 0.727404758175318,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.780102674021947,
+            24.24232141768733,
+            23.8375525899004,
+            24.244296860578476
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "e8c02c0ce58a9cf17055813993f27434be9644247d35188356ac6146cf9ad2c8",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.0183430276811123e-7
+        },
+        "realtime": {
+          "mode": "realtime",
+          "hvacKwh": 157.05450000000488,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.935240197772988,
+            23.184759532737402,
+            23.976134555097605,
+            23.130401617791566
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "94ed28d920913b49c42cf5a1c12493d1d00e5e8eccec11826f40e4eca38a53ed",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 1.0905205272138119e-7
+        },
+        "predictive": {
+          "mode": "predictive",
+          "hvacKwh": 157.43700000000496,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.898214189019754,
+            22.98256020310441,
+            23.940074803276573,
+            22.926669810889848
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "2de17abf7827b9d47238c1623983f2fed5121d7975d4b45fd0468d9922abad32",
+          "forecastSelectedCount": 98,
+          "sameStateCommandChanges": 3,
+          "maxResidualJ": 1.1068186722695827e-7
+        }
+      },
+      "predictiveVsRealtime": {
+        "hvacDifferenceKwh": 0.38250000000007844,
+        "commandDifferenceSlots": 28,
+        "terminalDifferenceC": 0.20373180690171822,
+        "temperatureComparable": false,
+        "qualifiedSavingPct": null
+      }
+    },
+    {
+      "date": "2026-06-30",
+      "mixingWPerK": 5000,
+      "sourceReplay": "2026-06-30_mix5000_joint.json",
+      "sourceReplaySha256": "8f85ff1ca268c5d8cd320af94fbc00883a2206a2e49a56254a84e7c87debb14f",
+      "modes": {
+        "baseline": {
+          "mode": "baseline",
+          "hvacKwh": 159.2347500000049,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.850553266878784,
+            24.093386569804554,
+            23.86146796283395,
+            24.09430771427231
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "e8c02c0ce58a9cf17055813993f27434be9644247d35188356ac6146cf9ad2c8",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 6.347545422613621e-8
+        },
+        "realtime": {
+          "mode": "realtime",
+          "hvacKwh": 157.47525000000658,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.96997747412268,
+            24.179650339582157,
+            23.98222350115734,
+            24.181465862733575
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "588e83795b6354ab86bd88b6837858949c6efa3152af040773d7fa7c1ec323e5",
+          "forecastSelectedCount": 0,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 6.063783075660467e-8
+        },
+        "predictive": {
+          "mode": "predictive",
+          "hvacKwh": 157.47525000000658,
+          "lightingKwh": 12.096000000000027,
+          "occupiedCompliancePct": 100,
+          "temperaturePass": true,
+          "maximumOccupiedViolationC": 0,
+          "maximumEmptyViolationC": 0,
+          "finalTemperaturesC": [
+            23.96997747412268,
+            24.179650339582157,
+            23.98222350115734,
+            24.181465862733575
+          ],
+          "lightScheduleSha256": "a38e126224c32b968017bef18fadd09c9861f22600a5dc5bbd9f3ba89270cc3d",
+          "commandTraceSha256": "588e83795b6354ab86bd88b6837858949c6efa3152af040773d7fa7c1ec323e5",
+          "forecastSelectedCount": 99,
+          "sameStateCommandChanges": 0,
+          "maxResidualJ": 6.063783075660467e-8
+        }
+      },
+      "predictiveVsRealtime": {
+        "hvacDifferenceKwh": 0,
+        "commandDifferenceSlots": 0,
+        "terminalDifferenceC": 0,
+        "temperatureComparable": true,
+        "qualifiedSavingPct": null
+      }
+    }
+  ]
+}

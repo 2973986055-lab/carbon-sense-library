@@ -86,12 +86,15 @@ const ids=[...html.matchAll(/\bid="([^"]+)"/g)].map(m=>m[1]);
 assert.equal(new Set(ids).size,ids.length);
 for(const script of html.matchAll(/<script>([\s\S]*?)<\/script>/g))new vm.Script(script[1]);
 const panel=fs.readFileSync(path.join(root,'data/climate-panel.js'),'utf8');new vm.Script(panel);
-for(const match of panel.matchAll(/(?:get|text)\('([^']+)'/g)) assert.ok(ids.includes(match[1]),`Missing ID ${match[1]}`);
-for(const id of ['climateDate','climateTime','climatePeople','climateHeight','climateAch','climateCurtain',
-  'climateBaselineTemp','climateOperation','climateOptimizedTemp','climateOptimizedTubes','climateInitialRh','climateShr'])assert.ok(ids.includes(id));
+assert.ok(!ids.includes('singleSlotTrial')&&!ids.includes('climatePeople'));
+assert.ok(ids.includes('controlComparison')&&ids.includes('jointLightingBars')&&ids.includes('jointHvacBars'));
 const linkedScripts=[...html.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>new URL(m[1],'https://example.test/').pathname);
-for(const script of ['building-inputs','thermal-model','environment-dataset','climate-panel'])assert.ok(linkedScripts.includes(`/data/${script}.js`));
-assert.ok(html.indexOf('data/environment-dataset.js')<html.indexOf('data/climate-panel.js'));
+const archiveHtml=fs.readFileSync(path.join(root,'legacy-models-20261014.html'),'utf8');
+const archiveScripts=[...archiveHtml.matchAll(/<script\b[^>]*\bsrc="([^"]+)"/g)].map(m=>new URL(m[1],'https://example.test/').pathname);
+for(const script of ['building-inputs','thermal-model','environment-dataset'])assert.ok(archiveScripts.includes(`/data/${script}.js`));
+for(const script of ['joint-evidence-data','joint-evidence-panel'])assert.ok(linkedScripts.includes(`/data/${script}.js`));
+assert.ok(!linkedScripts.includes('/data/hvac-v3-evidence-panel.js'));
+assert.ok(!linkedScripts.includes('/data/climate-panel.js'));
 const publicData=fs.readFileSync(path.join(root,'data/environment-dataset.js'),'utf8');
 assert.ok(!publicData.includes('C:/Users/')&&!publicData.includes('C:\\\\Users\\\\'));
 console.log(JSON.stringify({passed:true,records:336,activeScenarios:active,maxHalfhourEnergyKwh:maxEnergy,
